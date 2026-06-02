@@ -10,16 +10,20 @@ Route::get('/', function () {
     return view('home');
 });
 
-// Public Routes
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('login.post');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', function () {
+        return view('auth.login');
+    })->name('login');
+    
+    Route::post('/login', [AuthController::class, 'authenticate'])->name('login.post');
+    
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // Admin Routes
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users.index');
@@ -27,7 +31,6 @@ Route::middleware('auth')->group(function () {
         Route::resource('aturan', RuleController::class)->except(['create', 'show', 'edit', 'update']);
     });
 
-    // Dosen Routes
     Route::prefix('dosen')->name('dosen.')->group(function () {
         Route::get('/dashboard', [TaskController::class, 'dashboard'])->name('dashboard');
         Route::get('/tugas/create', [TaskController::class, 'create'])->name('tugas.create');
@@ -36,7 +39,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/riwayat', [TaskController::class, 'index'])->name('riwayat');
     });
 
-    // Mahasiswa Routes
     Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\MahasiswaController::class, 'dashboard'])->name('dashboard');
         Route::get('/riwayat', [App\Http\Controllers\MahasiswaController::class, 'riwayat'])->name('riwayat');
