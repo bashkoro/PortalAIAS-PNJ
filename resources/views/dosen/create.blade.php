@@ -185,7 +185,7 @@
                         <!-- Dimensi Pengetahuan -->
                         <div>
                             <div class="flex items-center mb-2">
-                                <label class="block text-sm font-medium text-gray-700">Dimensi Pengetahuan <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">Jenis Target Pengetahuan <span class="text-red-500">*</span></label>
                                 <div class="relative group ml-2 flex items-center">
                                     <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
@@ -201,10 +201,15 @@
                                 </div>
                             </div>
                             <select id="dimensi_pengetahuan" name="kriteria_tugas[dimensi_pengetahuan]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                                <option value="">-- Pilih Dimensi Pengetahuan --</option>
+                                <option value="">-- Pilih Jenis Target Pengetahuan --</option>
                                 @foreach($kriteriaOptions['dimensi_pengetahuan'] as $option)
                                     <option value="{{ $option }}" {{ old('kriteria_tugas.dimensi_pengetahuan') == $option ? 'selected' : '' }}>
-                                        {{ $option }}
+                                        @if($option == 'Pengetahuan Faktual') Fakta & Data Spesifik
+                                        @elseif($option == 'Pengetahuan Konseptual') Teori & Model Konsep
+                                        @elseif($option == 'Pengetahuan Prosedural') Langkah Kerja & Praktik
+                                        @elseif($option == 'Pengetahuan Metakognitif') Refleksi Diri & Pengalaman
+                                        @else {{ $option }}
+                                        @endif
                                     </option>
                                 @endforeach
                             </select>
@@ -212,7 +217,7 @@
                         <!-- Struktur Kompleksitas Respons -->
                         <div>
                             <div class="flex items-center mb-2">
-                                <label class="block text-sm font-medium text-gray-700">Struktur Kompleksitas Respons <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">Kompleksitas Jawaban <span class="text-red-500">*</span></label>
                                 <div class="relative group ml-2 flex items-center">
                                     <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
@@ -229,62 +234,76 @@
                                 </div>
                             </div>
                             <select id="struktur_kompleksitas_respons" name="kriteria_tugas[struktur_kompleksitas_respons]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                                <option value="">-- Pilih Struktur Kompleksitas --</option>
+                                <option value="">-- Pilih Kompleksitas Jawaban --</option>
                                 @foreach($kriteriaOptions['struktur_kompleksitas_respons'] as $option)
                                     <option value="{{ $option }}" {{ old('kriteria_tugas.struktur_kompleksitas_respons') == $option ? 'selected' : '' }}>
-                                        {{ $option }}
+                                        @if($option == 'Prastruktural') Sangat Dasar
+                                        @elseif($option == 'Unistruktural') Fokus Satu Aspek
+                                        @elseif($option == 'Multistruktural') Pemaparan Banyak Fakta
+                                        @elseif($option == 'Relasional') Analisis Keterkaitan Konsep
+                                        @elseif($option == 'Abstrak Diperluas') Pengembangan Konsep Baru
+                                        @else {{ $option }}
+                                        @endif
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <!-- Tingkat Keaslian Konteks -->
+                        <!-- Konteks & Skenario Tugas -->
                         <div>
                             <div class="flex items-center mb-2">
-                                <label class="block text-sm font-medium text-gray-700">Tingkat Keaslian Konteks <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">Konteks & Skenario Tugas <span class="text-red-500">*</span></label>
                                 <div class="relative group ml-2 flex items-center">
-                                    <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                    <i class="fas fa-question-circle text-gray-400 hover:text-blue-500 cursor-help transition-colors"></i>
                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                         <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Keterangan:</p>
                                         <ul class="list-disc pl-4 space-y-1">
-                                            <li><strong>Dekontekstualisasi:</strong> Pembelajaran menggunakan konsep murni atau teoretis tanpa dikaitkan dengan kasus nyata.</li>
-                                            <li><strong>Simulasi:</strong> Pembelajaran menggunakan skenario yang dirancang menyerupai dunia nyata.</li>
-                                            <li><strong>Otentik:</strong> Pembelajaran diterapkan langsung pada studi kasus nyata atau di industri.</li>
+                                            <li><strong>Teori Murni / Konseptual:</strong> Tugas bersifat teoritis abstrak, akademis murni, dan tidak terikat pada situasi dunia nyata.</li>
+                                            <li><strong>Simulasi / Studi Kasus Buatan:</strong> Tugas menggunakan skenario pura-pura yang meniru kondisi lingkungan kerja.</li>
+                                            <li><strong>Proyek Lapangan / Industri Nyata:</strong> Tugas mewajibkan mahasiswa turun lapangan, mencari data primer, atau memecahkan krisis nyata dari pemangku kepentingan industri.</li>
                                         </ul>
                                         <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                     </div>
                                 </div>
                             </div>
                             <select id="tingkat_keaslian_konteks" name="kriteria_tugas[tingkat_keaslian_konteks]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                                <option value="">-- Pilih Keaslian Konteks --</option>
+                                <option value="">-- Pilih Konteks & Skenario --</option>
                                 @foreach($kriteriaOptions['tingkat_keaslian_konteks'] as $option)
                                     <option value="{{ $option }}" {{ old('kriteria_tugas.tingkat_keaslian_konteks') == $option ? 'selected' : '' }}>
-                                        {{ $option }}
+                                        @if($option == 'Dekontekstualisasi / Tradisional') Teori Murni / Konseptual
+                                        @elseif($option == 'Simulasi / Terapan') Simulasi / Studi Kasus Buatan
+                                        @elseif($option == 'Otentik / Dunia Nyata') Proyek Lapangan / Industri Nyata
+                                        @else {{ $option }}
+                                        @endif
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-                        <!-- Fokus Evaluasi -->
+                        <!-- Fokus Penilaian -->
                         <div>
                             <div class="flex items-center mb-2">
-                                <label class="block text-sm font-medium text-gray-700">Fokus Evaluasi <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700">Fokus Penilaian <span class="text-red-500">*</span></label>
                                 <div class="relative group ml-2 flex items-center">
                                     <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
                                     <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                        <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Fokus Evaluasi:</p>
+                                        <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Fokus Penilaian:</p>
                                         <ul class="list-disc pl-4 space-y-1">
-                                            <li><strong>Asesmen Produk:</strong> Nilai hanya diberikan berdasarkan hasil akhir (contoh: hanya melihat draf final laporan/esai/kode).</li>
-                                            <li><strong>Asesmen Proses:</strong> Nilai diberikan dengan melihat proses pengerjaan (contoh: logbook, riwayat draf, evaluasi iterasi, atau bukti revisi tulisan).</li>
-                                            <li><strong>Asesmen Dialogis:</strong> Penilaian dilakukan lewat interaksi lisan, seperti presentasi, tanya jawab langsung (viva voce), atau wawancara.</li>
+                                            <li><strong>Penilaian Hasil Akhir:</strong> Nilai murni dari dokumen atau karya yang dikumpulkan (contoh: laporan akhir, kode jadi, atau esai).</li>
+                                            <li><strong>Penilaian Proses Pengerjaan:</strong> Nilai mencakup pemantauan langkah pembuatan (contoh: logbook, draf, riwayat revisi, atau riwayat prompt AI).</li>
+                                            <li><strong>Penilaian Lisan / Presentasi:</strong> Penilaian dilakukan lewat interaksi langsung (contoh: presentasi kelas, tanya jawab, atau sidang).</li>
                                         </ul>
                                         <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                     </div>
                                 </div>
                             </div>
                             <select id="fokus_evaluasi" name="kriteria_tugas[fokus_evaluasi]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
-                                <option value="">-- Pilih Fokus Evaluasi --</option>
+                                <option value="">-- Pilih Fokus Penilaian --</option>
                                 @foreach($kriteriaOptions['fokus_evaluasi'] as $option)
                                     <option value="{{ $option }}" {{ old('kriteria_tugas.fokus_evaluasi') == $option ? 'selected' : '' }}>
-                                        {{ $option }}
+                                        @if($option == 'Asesmen Produk') Penilaian Hasil Akhir
+                                        @elseif($option == 'Asesmen Proses') Penilaian Proses Pengerjaan
+                                        @elseif($option == 'Asesmen Dialogis') Penilaian Lisan / Presentasi
+                                        @else {{ $option }}
+                                        @endif
                                     </option>
                                 @endforeach
                             </select>
