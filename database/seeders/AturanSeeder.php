@@ -3,15 +3,17 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
-
 class AturanSeeder extends Seeder
 {
     public function run(): void
     {
         // Use CASCADE for PostgreSQL truncation
+        Schema::disableForeignKeyConstraints();
         DB::table('kondisi_aturan')->truncate();
-        DB::statement('TRUNCATE TABLE aturan CASCADE;');
+        DB::table('aturan')->truncate();
+        Schema::enableForeignKeyConstraints();
 
         $lingkungan = ['Terbuka / Tanpa Pengawasan', 'Terkendali Penuh / Terawasi'];
         // Use the exact strings expected by the UI

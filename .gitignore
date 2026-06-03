@@ -26,7 +26,6 @@ Thumbs.db
 
 # Project specific ignores
 AI_Score.session.sql
-generate_blade.py
 replace_logo.pl
 penjelasan.md
 WebArchitecturePlan.md
