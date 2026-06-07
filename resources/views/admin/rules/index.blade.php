@@ -1,147 +1,116 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Aturan - Portal Asesmen AI</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+@extends('layouts.admin')
 
-<div class="flex flex-col md:flex-row">
+@section('title', 'Rule AIAS')
 
-    <!-- Sidebar -->
-    <div class="bg-white border-r border-gray-200 h-16 fixed bottom-0 md:sticky md:top-0 md:h-screen z-30 w-full md:w-64 border-t md:border-t-0">
-        <div class="md:h-[73px] md:w-full md:flex md:items-center md:justify-center hidden border-b border-gray-200">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-md">
-                    <span class="text-white font-bold text-sm">AI</span>
-                </div>
-                <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-blue-600">PNJ</span></span>
+@section('content')
+    <div class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
+        <div class="px-6 py-5 border-b border-gray-200 bg-white flex justify-between items-center">
+            <div>
+                <h3 class="font-bold text-gray-900 text-lg">Daftar Aturan Klasifikasi</h3>
+                <p class="text-sm text-gray-500 mt-1">Seluruh basis aturan Sistem Pakar (Forward Chaining).</p>
             </div>
-        </div>
-        <ul class="flex flex-row md:flex-col py-0 md:py-4 text-center md:text-left justify-around md:justify-start w-full h-full md:h-auto">
-            <li class="flex-1 md:w-full md:mb-2">
-                <a href="{{ route('admin.dashboard') }}" class="block py-3 md:py-3 pl-1 align-middle text-gray-500 no-underline border-b-4 border-transparent md:border-l-4 hover:border-gray-300 md:hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 transition-colors">
-                    <i class="fas fa-chart-pie pr-0 md:pr-3 ml-4"></i><span class="pb-1 md:pb-0 text-sm md:text-base block md:inline-block">Dashboard</span>
-                </a>
-            </li>
-            <li class="flex-1 md:w-full md:mb-2">
-                <a href="{{ route('admin.users.index') }}" class="block py-3 md:py-3 pl-1 align-middle text-gray-500 no-underline border-b-4 border-transparent md:border-l-4 hover:border-gray-300 md:hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700 transition-colors">
-                    <i class="fas fa-users pr-0 md:pr-3 ml-4"></i><span class="pb-1 md:pb-0 text-sm md:text-base block md:inline-block">Pengguna</span>
-                </a>
-            </li>
-            <li class="flex-1 md:w-full md:mb-2">
-                <a href="{{ route('admin.rules.index') }}" class="block py-3 md:py-3 pl-1 align-middle text-blue-600 no-underline border-b-4 border-blue-600 md:border-b-0 md:border-l-4 hover:bg-gray-50 transition-colors bg-blue-50">
-                    <i class="fas fa-cogs pr-0 md:pr-3 text-blue-600 ml-4"></i><span class="pb-1 md:pb-0 text-sm md:text-base text-blue-600 font-medium md:font-semibold block md:inline-block">Aturan AIAS</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-0 pb-24 md:pb-5">
-
-        <!-- Header -->
-        <div class="bg-white border-b border-gray-200 w-full p-4 flex justify-between items-center sticky top-0 z-20 h-[73px]">
-            <h1 class="text-xl md:text-2xl font-bold text-gray-800 hidden md:block">Knowledge Base (Basis Aturan)</h1>
-            <div class="md:hidden">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-md">
-                        <span class="text-white font-bold text-sm">AI</span>
-                    </div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-blue-600">PNJ</span></span>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <span class="text-gray-600 mr-4 font-medium">{{ Auth::user()->nama ?? 'Administrator' }}</span>
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="text-red-500 hover:text-red-700 font-semibold text-sm transition-colors border border-red-200 hover:border-red-300 px-3 py-1.5 rounded-md hover:bg-red-50">
-                        <i class="fas fa-sign-out-alt mr-1"></i>Keluar
-                    </button>
-                </form>
+            <div class="flex items-center gap-2">
+                <span class="bg-blue-50 text-blue-700 py-1 px-3 rounded-full text-xs font-bold border border-blue-100">Total: {{ $aturan->total() }} Rules</span>
             </div>
         </div>
 
-        <div class="p-4 md:p-8">
-
-            <div class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
-                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                    <div>
-                        <h3 class="font-bold text-gray-800 text-lg">Daftar Logika Forward Chaining</h3>
-                        <p class="text-sm text-gray-500">Logika IF-THEN yang digunakan sistem untuk menentukan batas AI Score tugas.</p>
-                    </div>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded shadow transition-colors">
-                        <i class="fas fa-plus mr-2"></i>Tambah Aturan
-                    </button>
-                </div>
-                
-                <div class="p-6 space-y-6">
-                    @forelse($aturan as $rule)
-                    <div class="border border-gray-200 rounded-lg p-5 bg-white hover:shadow-md transition-shadow relative">
-                        <div class="absolute top-4 right-4">
-                            <span class="{{ $rule->is_active ? 'bg-blue-50 text-green-800' : 'bg-red-100 text-red-800' }} text-xs font-semibold px-2.5 py-0.5 rounded">
-                                {{ $rule->is_active ? 'Aktif' : 'Tidak Aktif' }}
-                            </span>
+        <!-- Search & Filter Bar -->
+        <div class="px-6 py-4 bg-gray-50/50 border-b border-gray-100">
+            <form method="GET" action="{{ url()->current() }}" class="flex flex-col lg:flex-row gap-4 items-end lg:items-center">
+                <div class="w-full lg:w-1/3">
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
                         </div>
-                        
-                        <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-                            <div class="flex-1">
-                                <div class="font-mono text-sm bg-gray-50 p-4 rounded border border-gray-100">
-                                    <span class="text-blue-600 font-bold">JIKA (IF)</span><br>
-                                    @foreach($rule->kondisiAturan as $index => $kondisi)
-                                        <span class="ml-4">
-                                            <span class="text-blue-700">{{ $kondisi->nama_parameter }}</span> 
-                                            <span class="text-gray-500">{{ $kondisi->operator }}</span> 
-                                            <span class="text-blue-700">"{{ $kondisi->target_value }}"</span>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nilai kriteria (e.g. Mengingat)..." class="block w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/4">
+                    <select name="tingkat_aias_id" class="block w-full py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none">
+                        <option value="">-- Semua Level AIAS --</option>
+                        @foreach($levels as $level)
+                            <option value="{{ $level->id }}" {{ request('tingkat_aias_id') == $level->id ? 'selected' : '' }}>{{ $level->nama_tingkat }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex gap-2 w-full lg:w-auto">
+                    <button type="submit" class="flex-1 lg:flex-none px-6 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-black transition-colors shadow-sm">
+                        Cari
+                    </button>
+                    <a href="{{ url()->current() }}" class="flex-1 lg:flex-none px-6 py-2 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-all text-center">
+                        Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white text-left table-fixed">
+                <thead class="bg-gray-50/50 text-gray-400 text-[10px] uppercase font-bold tracking-wider border-b border-gray-100">
+                    <tr>
+                        <th class="py-4 px-6 w-16 text-center">ID</th>
+                        <th class="py-4 px-6 w-[60%]">Kondisi (IF)</th>
+                        <th class="py-4 px-6 text-center">Hasil (THEN)</th>
+                        <th class="py-4 px-6 w-20 text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm divide-y divide-gray-50">
+                    @forelse($aturan as $item)
+                    <tr class="hover:bg-blue-50/30 transition-all group">
+                        <td class="py-4 px-6 text-center font-mono text-[10px] text-gray-300 group-hover:text-blue-400">{{ $item->id }}</td>
+                        <td class="py-4 px-6">
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($item->kondisiAturan as $kondisi)
+                                    <div class="inline-flex items-center px-2 py-1 rounded border border-gray-100 bg-white shadow-sm transition-all group-hover:border-blue-100">
+                                        <span class="text-[9px] font-bold text-gray-400 uppercase mr-1.5">{{ str_replace('_', ' ', $kondisi->nama_parameter) }}:</span>
+                                        <span class="text-[11px] font-semibold text-gray-700 @if(request('search') && str_contains(strtolower($kondisi->target_value), strtolower(request('search')))) bg-yellow-100 ring-2 ring-yellow-100 rounded-sm @endif">
+                                            {{ $kondisi->target_value }}
                                         </span>
-                                        @if(!$loop->last)
-                                            <br><span class="text-gray-700 font-bold ml-4">DAN (AND)</span><br>
-                                        @endif
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            
-                            <div class="hidden md:block text-gray-400">
-                                <i class="fas fa-arrow-right text-2xl"></i>
-                            </div>
-                            <div class="md:hidden text-gray-400 self-center my-2">
-                                <i class="fas fa-arrow-down text-xl"></i>
-                            </div>
-
-                            <div class="w-full md:w-48 bg-blue-50 border border-blue-50 rounded-lg p-4 text-center">
-                                <span class="text-blue-700 font-bold text-sm block mb-1">MAKA HASILNYA (THEN)</span>
-                                <span class="text-xl font-black text-gray-900 block">{{ $rule->tingkatAias->nama_tingkat ?? 'Tidak Diketahui' }}</span>
-                            </div>
-                            
-                            <div class="flex md:flex-col gap-2 w-full md:w-auto justify-end mt-2 md:mt-0">
-                                <button class="p-2 text-gray-500 hover:text-blue-600 bg-gray-100 hover:bg-blue-50 rounded transition-colors" title="Edit Aturan">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <form method="POST" action="{{ route('admin.aturan.destroy', $rule->id) }}" class="inline" onsubmit="return confirm('Yakin ingin menonaktifkan aturan ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="p-2 text-gray-500 hover:text-red-600 bg-gray-100 hover:bg-red-50 rounded transition-colors" title="Hapus Aturan">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            @php
+                                $levelName = $item->tingkatAias->nama_tingkat;
+                                $colorClass = 'bg-gray-100 text-gray-800 border-gray-200';
+                                if (str_contains($levelName, '1')) $colorClass = 'bg-emerald-50 text-emerald-700 border-emerald-100';
+                                elseif (str_contains($levelName, '2')) $colorClass = 'bg-blue-50 text-blue-700 border-blue-100';
+                                elseif (str_contains($levelName, '3')) $colorClass = 'bg-amber-50 text-amber-700 border-amber-100';
+                                elseif (str_contains($levelName, '4')) $colorClass = 'bg-indigo-50 text-indigo-700 border-indigo-100';
+                                elseif (str_contains($levelName, '5')) $colorClass = 'bg-rose-50 text-rose-700 border-rose-100';
+                            @endphp
+                            <span class="{{ $colorClass }} py-1 px-3 rounded text-[11px] font-bold border uppercase tracking-wide inline-block min-w-[70px]" title="{{ $item->tingkatAias->deskripsi }}">
+                                {{ $levelName }}
+                            </span>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            @if($item->is_active)
+                                <span class="flex items-center justify-center h-5 w-5 mx-auto rounded-full bg-emerald-50 text-emerald-500 border border-emerald-100 shadow-sm">
+                                    <i class="fas fa-check text-[10px]"></i>
+                                </span>
+                            @else
+                                <span class="flex items-center justify-center h-5 w-5 mx-auto rounded-full bg-gray-50 text-gray-300 border border-gray-100">
+                                    <i class="fas fa-times text-[10px]"></i>
+                                </span>
+                            @endif
+                        </td>
+                    </tr>
                     @empty
-                    <div class="text-center py-8 text-gray-500">
-                        <i class="fas fa-database text-4xl mb-3 text-gray-300"></i>
-                        <p>Belum ada aturan di dalam Knowledge Base.</p>
-                    </div>
+                    <tr>
+                        <td colspan="4" class="py-12 px-6 text-center text-gray-400 bg-gray-50/30">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-search mb-3 text-2xl opacity-20"></i>
+                                <p>Tidak ditemukan aturan yang sesuai dengan kriteria.</p>
+                            </div>
+                        </td>
+                    </tr>
                     @endforelse
-                </div>
-            </div>
-
+                </tbody>
+            </table>
+        </div>
+        <div class="px-6 py-5 border-t border-gray-100 bg-gray-50/30">
+            {{ $aturan->links() }}
         </div>
     </div>
-</div>
-
-</body>
-</html>
+@endsection

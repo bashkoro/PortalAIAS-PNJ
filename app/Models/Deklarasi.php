@@ -32,6 +32,11 @@ class Deklarasi extends Model
         return $this->hasMany(RiwayatPrompt::class);
     }
 
+    public function tingkatAias(): BelongsTo
+    {
+        return $this->belongsTo(TingkatAias::class);
+    }
+
     public function validateInput(array $request): bool
     {
         // Add basic validation logic as an example

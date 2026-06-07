@@ -9,6 +9,13 @@ use App\Http\Controllers\Admin\ProgramStudiController;
 use App\Http\Controllers\Admin\PeriodeAkademikController;
 use App\Http\Controllers\Admin\MataKuliahController;
 use App\Http\Controllers\Admin\KelasKuliahController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dosen\DashboardController as DosenDashboard;
+use App\Http\Controllers\Dosen\KelasController as DosenKelas;
+use App\Http\Controllers\Mahasiswa\DashboardController as MahasiswaDashboard;
+use App\Http\Controllers\Mahasiswa\KelasController as MahasiswaKelas;
+use App\Http\Controllers\Mahasiswa\DeklarasiController as MahasiswaDeklarasi;
+use App\Http\Controllers\Mahasiswa\RiwayatController as MahasiswaRiwayat;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -56,9 +63,10 @@ Route::middleware('auth')->group(function () {
     // Protected Routes requiring verified email
     Route::middleware('verified')->group(function () {
         
-        // Change Password
-        Route::get('/profile/password', [PasswordController::class, 'edit'])->name('password.edit');
-        Route::put('/profile/password', [PasswordController::class, 'update'])->name('password.update');
+        // Universal Profile Routes
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
@@ -75,20 +83,39 @@ Route::middleware('auth')->group(function () {
             Route::resource('kelas-kuliah', KelasKuliahController::class)->except(['show']);
         });
 
+        // Dosen Portal Routes
         Route::prefix('dosen')->name('dosen.')->group(function () {
-            Route::get('/dashboard', [TaskController::class, 'dashboard'])->name('dashboard');
+            Route::get('/dashboard', [DosenDashboard::class, 'index'])->name('dashboard');
+            
+            // Kelas Management
+            Route::get('/kelas/available', [DosenKelas::class, 'available'])->name('kelas.available');
+            Route::post('/kelas/claim', [DosenKelas::class, 'claim'])->name('kelas.claim');
+            Route::get('/kelas/{kelas}', [DosenKelas::class, 'show'])->name('kelas.show');
+            
+            // Riwayat Tugas
+            Route::get('/riwayat', [TaskController::class, 'index'])->name('riwayat');
+
+            // Old Task Routes (kept for compatibility)
             Route::get('/tugas/create', [TaskController::class, 'create'])->name('tugas.create');
             Route::post('/tugas', [TaskController::class, 'store'])->name('tugas.store');
             Route::get('/tugas/{task}/declarations', [TaskController::class, 'showDeclarations'])->name('tugas.declarations');
-            Route::get('/riwayat', [TaskController::class, 'index'])->name('riwayat');
         });
 
+        // Mahasiswa Portal Routes
         Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
-            Route::get('/dashboard', [App\Http\Controllers\MahasiswaController::class, 'dashboard'])->name('dashboard');
-            Route::get('/riwayat', [App\Http\Controllers\MahasiswaController::class, 'riwayat'])->name('riwayat');
-            Route::get('/deklarasi', [DeclarationController::class, 'index'])->name('deklarasi.index');
-            Route::post('/deklarasi', [DeclarationController::class, 'store'])->name('deklarasi.store');
-            Route::get('/deklarasi/{task}', [DeclarationController::class, 'show'])->name('deklarasi.show');
+            Route::get('/dashboard', [MahasiswaDashboard::class, 'index'])->name('dashboard');
+            
+            // Kelas Management
+            Route::get('/kelas/available', [MahasiswaKelas::class, 'available'])->name('kelas.available');
+            Route::post('/kelas/enroll', [MahasiswaKelas::class, 'enroll'])->name('kelas.enroll');
+            Route::get('/kelas/{kelas}', [MahasiswaKelas::class, 'show'])->name('kelas.show');
+            
+            // Deklarasi AI
+            Route::get('/deklarasi/create', [MahasiswaDeklarasi::class, 'create'])->name('deklarasi.create');
+            Route::post('/deklarasi', [MahasiswaDeklarasi::class, 'store'])->name('deklarasi.store');
+            
+            // Riwayat Deklarasi
+            Route::get('/riwayat', [MahasiswaRiwayat::class, 'index'])->name('riwayat');
         });
     });
 });

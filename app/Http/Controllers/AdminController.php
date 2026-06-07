@@ -61,10 +61,27 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users', 'hakAkses'));
     }
 
-    public function rules()
+    public function rules(Request $request)
     {
-        $aturan = Aturan::with('kondisiAturan', 'tingkatAias')->orderBy('id', 'desc')->get();
-        return view('admin.rules.index', compact('aturan'));
+        $search = $request->query('search');
+        $levelId = $request->query('tingkat_aias_id');
+
+        $aturan = Aturan::with(['kondisiAturan', 'tingkatAias'])
+            ->when($search, function ($query, $search) {
+                return $query->whereHas('kondisiAturan', function($q) use ($search) {
+                    $q->where('target_value', 'ilike', '%' . $search . '%');
+                });
+            })
+            ->when($levelId, function ($query, $levelId) {
+                return $query->where('tingkat_aias_id', $levelId);
+            })
+            ->orderBy('id', 'asc')
+            ->paginate(15)
+            ->appends($request->query());
+
+        $levels = \App\Models\TingkatAias::orderBy('id')->get();
+
+        return view('admin.rules.index', compact('aturan', 'levels'));
     }
 }
 
