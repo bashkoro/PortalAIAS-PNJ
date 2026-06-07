@@ -102,10 +102,13 @@
                 </button>
             </form>
 
-            <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+            <div class="mt-8 pt-6 border-t border-gray-100 text-center space-y-3">
                 <p class="text-sm text-gray-600">
                     Belum punya akun? 
                     <a href="{{ route('register') }}" class="font-bold text-blue-600 hover:text-blue-700 transition-colors">Daftar di sini</a>
+                </p>
+                <p class="text-sm text-gray-600">
+                    <a href="{{ route('password.request') }}" class="font-medium text-blue-600 hover:text-blue-700 transition-colors">Lupa Sandi?</a>
                 </p>
             </div>
             

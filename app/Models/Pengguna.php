@@ -6,9 +6,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Notifications\Notifiable;
 
 class Pengguna extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'pengguna';
     public $timestamps = false;
     protected $guarded = ['id'];
