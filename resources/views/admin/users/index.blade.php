@@ -77,6 +77,36 @@
                         <i class="fas fa-user-plus mr-2"></i>Tambah User
                     </button>
                 </div>
+                
+                <!-- Search & Filter Bar -->
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                    <form method="GET" action="{{ url()->current() }}" class="flex flex-col sm:flex-row gap-4 items-end sm:items-center">
+                        <div class="w-full sm:w-1/3">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400 text-sm"></i>
+                                </div>
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div class="w-full sm:w-1/4">
+                            <select name="hak_akses_id" class="block w-full py-2 px-3 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">-- Semua Hak Akses --</option>
+                                @foreach($hakAkses as $role)
+                                    <option value="{{ $role->id }}" {{ request('hak_akses_id') == $role->id ? 'selected' : '' }}>{{ $role->nama_hak_akses }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex gap-2 w-full sm:w-auto">
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">
+                                Cari
+                            </button>
+                            <a href="{{ url()->current() }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1 text-center">
+                                Reset
+                            </a>
+                        </div>
+                    </form>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full bg-white">
                         <thead class="bg-gray-50 text-gray-600 text-sm uppercase font-semibold">

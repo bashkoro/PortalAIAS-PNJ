@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Akun - Portal Asesmen AI PNJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @keyframes blob {
@@ -98,7 +99,7 @@
                     @enderror
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1" for="hak_akses">Peran</label>
                         <div class="relative">
@@ -119,27 +120,69 @@
                     </div>
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1" for="program_studi_id">Program Studi</label>
-                        <div class="relative">
+                        @php
+                            $prodiJson = $programStudi->map(fn($p) => ['id' => $p->id, 'nama' => $p->nama_prodi])->toJson();
+                        @endphp
+                        <div x-data="{
+                            open: false,
+                            search: '',
+                            selectedId: '{{ old('program_studi_id', '') }}',
+                            options: {{ $prodiJson }},
+                            get filteredOptions() {
+                                if (this.search === '') return this.options;
+                                return this.options.filter(i => i.nama.toLowerCase().includes(this.search.toLowerCase()));
+                            },
+                            get selectedName() {
+                                let selected = this.options.find(i => i.id == this.selectedId);
+                                return selected ? selected.nama : '-- Pilih Program Studi --';
+                            },
+                            selectOption(id) {
+                                this.selectedId = id;
+                                this.open = false;
+                                this.search = '';
+                            }
+                        }" class="relative w-full">
+                            
+                            <!-- Hidden input to hold the actual value for form submission -->
+                            <input type="hidden" name="program_studi_id" :value="selectedId">
+                            
+                            <button @click="open = !open" @click.away="open = false" type="button" 
+                                    class="block w-full pl-10 pr-8 py-2.5 border border-gray-300 rounded-lg text-sm shadow-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 text-left bg-white whitespace-nowrap overflow-hidden text-ellipsis">
+                                <span x-text="selectedName" :class="selectedId === '' ? 'text-gray-500' : 'text-gray-900'"></span>
+                            </button>
+                            
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fas fa-graduation-cap text-gray-400 text-xs"></i>
                             </div>
-                            <select name="program_studi_id" id="program_studi_id" 
-                                    class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg text-sm shadow-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-colors appearance-none bg-white" 
-                                    required>
-                                <option value="">-- Pilih --</option>
-                                @foreach($programStudi as $prodi)
-                                    <option value="{{ $prodi->id }}" {{ old('program_studi_id') == $prodi->id ? 'selected' : '' }}>
-                                        {{ $prodi->nama_prodi }}
-                                    </option>
-                                @endforeach
-                            </select>
                             <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                 <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </div>
+
+                            <!-- Dropdown List -->
+                            <div x-show="open" style="display: none;" 
+                                 x-transition.opacity duration.200ms
+                                 class="absolute z-50 w-[250px] sm:w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-hidden flex flex-col right-0 sm:left-0">
+                                <div class="p-2 bg-gray-50 border-b border-gray-200 shrink-0">
+                                    <input x-model="search" x-ref="searchInput" type="text" 
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" 
+                                           placeholder="Cari prodi..." 
+                                           @keydown.escape="open = false"
+                                           x-init="$watch('open', value => { if(value) setTimeout(() => $refs.searchInput.focus(), 50) })">
+                                </div>
+                                <ul class="py-1 overflow-y-auto grow">
+                                    <template x-for="option in filteredOptions" :key="option.id">
+                                        <li @click="selectOption(option.id)" 
+                                            class="px-3 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 cursor-pointer" 
+                                            :class="{'bg-blue-100 text-blue-700 font-semibold': selectedId == option.id}" 
+                                            x-text="option.nama"></li>
+                                    </template>
+                                    <li x-show="filteredOptions.length === 0" class="px-3 py-3 text-sm text-gray-500 text-center">Prodi tidak ditemukan</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     @error('hak_akses')
                         <p class="text-red-500 text-xs">{{ $message }}</p>
                     @enderror
@@ -148,7 +191,7 @@
                     @enderror
                 </div>
                 
-                <div class="grid grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1" for="password">Kata Sandi</label>
                         <div class="relative">

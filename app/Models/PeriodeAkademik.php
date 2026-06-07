@@ -9,7 +9,7 @@ class PeriodeAkademik extends Model
 {
     protected $table = 'periode_akademik';
     public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $fillable = ['nama_periode', 'is_active'];
 
     protected $casts = [
         'is_active' => 'boolean',

@@ -6,6 +6,9 @@ use App\Models\Pengguna;
 use App\Models\Aturan;
 use App\Models\Tugas;
 use App\Models\Deklarasi;
+use App\Models\ProgramStudi;
+use App\Models\MataKuliah;
+use App\Models\KelasKuliah;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -16,16 +19,46 @@ class AdminController extends Controller
         $aturanAktif = Aturan::where('is_active', true)->count();
         $totalTugas = Tugas::count();
         $totalDeklarasi = Deklarasi::count();
+        $totalProgramStudi = ProgramStudi::count();
+        $totalMataKuliah = MataKuliah::count();
+        $totalKelasKuliah = KelasKuliah::count();
 
         $userTerbaru = Pengguna::with('hakAkses', 'programStudi')->orderBy('id', 'desc')->take(5)->get();
 
-        return view('admin.dashboard', compact('totalPengguna', 'aturanAktif', 'totalTugas', 'totalDeklarasi', 'userTerbaru'));
+        return view('admin.dashboard', compact(
+            'totalPengguna', 
+            'aturanAktif', 
+            'totalTugas', 
+            'totalDeklarasi', 
+            'userTerbaru',
+            'totalProgramStudi',
+            'totalMataKuliah',
+            'totalKelasKuliah'
+        ));
     }
 
-    public function users()
+    public function users(Request $request)
     {
-        $users = Pengguna::with('hakAkses', 'programStudi')->orderBy('id', 'desc')->get();
-        return view('admin.users.index', compact('users'));
+        $search = $request->query('search');
+        $hakAksesId = $request->query('hak_akses_id');
+
+        $users = Pengguna::with('hakAkses', 'programStudi')
+            ->when($search, function ($query, $search) {
+                return $query->where(function($q) use ($search) {
+                    $q->where('nama', 'ilike', '%' . $search . '%')
+                      ->orWhere('email', 'ilike', '%' . $search . '%');
+                });
+            })
+            ->when($hakAksesId, function ($query, $hakAksesId) {
+                return $query->where('hak_akses_id', $hakAksesId);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10)
+            ->appends($request->query());
+
+        $hakAkses = \App\Models\HakAkses::orderBy('nama_hak_akses')->get();
+
+        return view('admin.users.index', compact('users', 'hakAkses'));
     }
 
     public function rules()
@@ -34,3 +67,4 @@ class AdminController extends Controller
         return view('admin.rules.index', compact('aturan'));
     }
 }
+

@@ -5,6 +5,10 @@ use App\Http\Controllers\DeclarationController;
 use App\Http\Controllers\RuleController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Admin\ProgramStudiController;
+use App\Http\Controllers\Admin\PeriodeAkademikController;
+use App\Http\Controllers\Admin\MataKuliahController;
+use App\Http\Controllers\Admin\KelasKuliahController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +65,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users.index');
             Route::get('/rules', [App\Http\Controllers\AdminController::class, 'rules'])->name('rules.index');
             Route::resource('aturan', RuleController::class)->except(['create', 'show', 'edit', 'update']);
+            
+            // Master Data Routes
+            Route::resource('program-studi', ProgramStudiController::class)->except(['show']);
+            Route::resource('periode-akademik', PeriodeAkademikController::class)->except(['show']);
+            Route::post('periode-akademik/{periode_akademik}/set-active', [PeriodeAkademikController::class, 'setActive'])->name('periode-akademik.set-active');
+            
+            Route::resource('mata-kuliah', MataKuliahController::class)->except(['show']);
+            Route::resource('kelas-kuliah', KelasKuliahController::class)->except(['show']);
         });
 
         Route::prefix('dosen')->name('dosen.')->group(function () {

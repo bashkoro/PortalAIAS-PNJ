@@ -7,17 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class PeriodeAkademikSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     */
     public function run(): void
     {
         DB::table('periode_akademik')->insert([
-            [
-                'nama_periode' => 'Genap 2025/2026',
-                'is_active' => true,
-            ],
-            [
-                'nama_periode' => 'Ganjil 2025/2026',
-                'is_active' => false,
-            ],
+            'nama_periode' => '2025/2026 Genap',
+            'is_active' => true,
         ]);
     }
 }

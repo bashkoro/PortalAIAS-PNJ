@@ -9,7 +9,7 @@ class ProgramStudi extends Model
 {
     protected $table = 'program_studi';
     public $timestamps = false;
-    protected $guarded = ['id'];
+    protected $fillable = ['kode_prodi', 'nama_prodi'];
 
     public function pengguna(): HasMany
     {
