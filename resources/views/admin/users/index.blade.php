@@ -10,10 +10,10 @@
         </div>
     @endif
 
-    <div class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
-        <div class="px-6 py-5 border-b border-gray-200 bg-white flex flex-col sm:flex-row justify-between items-center gap-4">
+    <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 overflow-hidden">
+        <div class="px-8 py-6 border-b border-gray-100/80 bg-white flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>
-                <h3 class="font-bold text-gray-900 text-lg">Daftar Pengguna</h3>
+                <h3 class="font-extrabold text-gray-900 text-xl tracking-tight">Daftar Pengguna</h3>
                 <p class="text-sm text-gray-500 mt-1">Kelola data seluruh pengguna sistem.</p>
             </div>
         </div>
@@ -26,11 +26,11 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400 text-sm"></i>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..." class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..." class="block w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-200 focus:border-emerald-500 transition-all">
                     </div>
                 </div>
                 <div class="w-full sm:w-1/4">
-                    <select name="hak_akses_id" class="block w-full py-2 px-3 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                    <select name="hak_akses_id" class="block w-full py-2 px-3 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500">
                         <option value="">-- Semua Hak Akses --</option>
                         @foreach($hakAkses as $role)
                             <option value="{{ $role->id }}" {{ request('hak_akses_id') == $role->id ? 'selected' : '' }}>{{ $role->nama_hak_akses }}</option>
@@ -38,7 +38,7 @@
                     </select>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto">
-                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1">
+                    <button type="submit" class="px-5 py-2.5 bg-emerald-600 text-white rounded-xl shadow-md shadow-emerald-500/20 text-sm font-medium hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-1">
                         Cari
                     </button>
                     <a href="{{ url()->current() }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-1 text-center">
@@ -50,7 +50,7 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white text-left">
-                <thead class="bg-gray-50 text-gray-600 text-sm uppercase font-semibold border-b border-gray-200">
+                <thead class="bg-gray-50/50 text-gray-500 text-xs uppercase font-bold tracking-wider border-b border-gray-200">
                     <tr>
                         <th class="py-3 px-6">Nama</th>
                         <th class="py-3 px-6">Email</th>
@@ -60,12 +60,12 @@
                 </thead>
                 <tbody class="text-gray-700 text-sm divide-y divide-gray-100">
                     @forelse($users as $user)
-                    <tr class="hover:bg-gray-50 transition-colors">
+                    <tr class="hover:bg-emerald-50/30 transition-colors group">
                         <td class="py-4 px-6 font-medium text-gray-900">{{ $user->nama }}</td>
                         <td class="py-4 px-6 text-gray-600">{{ $user->email }}</td>
                         <td class="py-4 px-6 text-center">{{ $user->programStudi->nama_prodi ?? '-' }}</td>
                         <td class="py-4 px-6 text-center">
-                            <span class="bg-blue-50 text-blue-700 py-1 px-3 rounded-full text-xs font-bold">{{ $user->hakAkses->nama_hak_akses ?? '-' }}</span>
+                            <span class="bg-emerald-50 text-emerald-700 py-1 px-3 rounded-full text-xs font-bold">{{ $user->hakAkses->nama_hak_akses ?? '-' }}</span>
                         </td>
                     </tr>
                     @empty

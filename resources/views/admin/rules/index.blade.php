@@ -3,14 +3,14 @@
 @section('title', 'Rule AIAS')
 
 @section('content')
-    <div class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
-        <div class="px-6 py-5 border-b border-gray-200 bg-white flex justify-between items-center">
+    <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 overflow-hidden">
+        <div class="px-8 py-6 border-b border-gray-100/80 bg-white flex justify-between items-center">
             <div>
-                <h3 class="font-bold text-gray-900 text-lg">Daftar Aturan Klasifikasi</h3>
+                <h3 class="font-extrabold text-gray-900 text-xl tracking-tight">Daftar Aturan Klasifikasi</h3>
                 <p class="text-sm text-gray-500 mt-1">Seluruh basis aturan Sistem Pakar (Forward Chaining).</p>
             </div>
             <div class="flex items-center gap-2">
-                <span class="bg-blue-50 text-blue-700 py-1 px-3 rounded-full text-xs font-bold border border-blue-100">Total: {{ $aturan->total() }} Rules</span>
+                <span class="bg-emerald-50 text-emerald-700 py-1 px-3 rounded-full text-xs font-bold border border-blue-100">Total: {{ $aturan->total() }} Rules</span>
             </div>
         </div>
 
@@ -22,11 +22,11 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i class="fas fa-search text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nilai kriteria (e.g. Mengingat)..." class="block w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nilai kriteria (e.g. Mengingat)..." class="block w-full pl-10 pr-3 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all">
                     </div>
                 </div>
                 <div class="w-full lg:w-1/4">
-                    <select name="tingkat_aias_id" class="block w-full py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none">
+                    <select name="tingkat_aias_id" class="block w-full py-2 px-3 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all appearance-none">
                         <option value="">-- Semua Level AIAS --</option>
                         @foreach($levels as $level)
                             <option value="{{ $level->id }}" {{ request('tingkat_aias_id') == $level->id ? 'selected' : '' }}>{{ $level->nama_tingkat }}</option>
@@ -56,7 +56,7 @@
                 </thead>
                 <tbody class="text-gray-600 text-sm divide-y divide-gray-50">
                     @forelse($aturan as $item)
-                    <tr class="hover:bg-blue-50/30 transition-all group">
+                    <tr class="hover:bg-emerald-50/30 transition-all group">
                         <td class="py-4 px-6 text-center font-mono text-[10px] text-gray-300 group-hover:text-blue-400">{{ $item->id }}</td>
                         <td class="py-4 px-6">
                             <div class="flex flex-wrap gap-2">
@@ -75,7 +75,7 @@
                                 $levelName = $item->tingkatAias->nama_tingkat;
                                 $colorClass = 'bg-gray-100 text-gray-800 border-gray-200';
                                 if (str_contains($levelName, '1')) $colorClass = 'bg-emerald-50 text-emerald-700 border-emerald-100';
-                                elseif (str_contains($levelName, '2')) $colorClass = 'bg-blue-50 text-blue-700 border-blue-100';
+                                elseif (str_contains($levelName, '2')) $colorClass = 'bg-emerald-50 text-emerald-700 border-blue-100';
                                 elseif (str_contains($levelName, '3')) $colorClass = 'bg-amber-50 text-amber-700 border-amber-100';
                                 elseif (str_contains($levelName, '4')) $colorClass = 'bg-indigo-50 text-indigo-700 border-indigo-100';
                                 elseif (str_contains($levelName, '5')) $colorClass = 'bg-rose-50 text-rose-700 border-rose-100';

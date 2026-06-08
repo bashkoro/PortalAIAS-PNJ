@@ -3,17 +3,17 @@
     <h1 class="text-xl md:text-2xl font-bold text-gray-800 hidden md:block">@yield('title', 'Dashboard Admin')</h1>
     <div class="md:hidden">
         <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-md">
+            <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center shadow-md">
                 <span class="text-white font-bold text-sm">AI</span>
             </div>
-            <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-blue-600">PNJ</span></span>
+            <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-emerald-600">PNJ</span></span>
         </div>
     </div>
     <div class="flex items-center" x-data="{ open: false }">
         <div class="relative">
             <button @click="open = !open" @click.away="open = false" class="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none transition duration-150 ease-in-out">
                 <span class="text-gray-600 font-medium hidden md:block">{{ Auth::user()->nama ?? 'Administrator' }}</span>
-                <img class="h-8 w-8 rounded-full object-cover border border-gray-300 shadow-sm" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama ?? 'Administrator') }}&color=1D4ED8&background=EFF6FF" alt="Profile">
+                <img class="h-8 w-8 rounded-full object-cover border border-gray-300 shadow-sm" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->nama ?? 'Administrator') }}&color=047857&background=ecfdf5" alt="Profile">
                 <i class="fas fa-chevron-down text-xs text-gray-400"></i>
             </button>
 
@@ -28,7 +28,7 @@
                  style="display: none;">
                 
                 <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition border-b border-gray-50">
-                    <i class="fas fa-user-circle mr-2 text-blue-600 w-4"></i> Pengaturan Profil
+                    <i class="fas fa-user-circle mr-2 text-emerald-600 w-4"></i> Pengaturan Profil
                 </a>
                 
                 <form method="POST" action="{{ route('logout') }}" class="w-full">

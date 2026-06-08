@@ -12,19 +12,19 @@
         @endif
 
         <!-- Table -->
-        <div class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
-            <div class="px-6 py-5 border-b border-gray-200 bg-white flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 overflow-hidden">
+            <div class="px-8 py-6 border-b border-gray-100/80 bg-white flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
-                    <h3 class="font-bold text-gray-900 text-lg">Daftar Semua Penugasan</h3>
+                    <h3 class="font-extrabold text-gray-900 text-xl tracking-tight">Daftar Semua Penugasan</h3>
                     <p class="text-sm text-gray-500 mt-1">Seluruh riwayat tugas yang telah Anda buat dan klasifikasi.</p>
                 </div>
-                <a href="{{ route('dosen.tugas.create') }}" class="inline-flex items-center px-6 py-2.5 bg-blue-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-lg shadow-blue-100">
+                <a href="{{ route('dosen.tugas.create') }}" class="inline-flex items-center px-6 py-2.5 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 transition-all shadow-lg shadow-blue-100">
                     <i class="fas fa-plus mr-2"></i> Tugas Baru
                 </a>
             </div>
             <div class="overflow-x-auto">
                 <table class="min-w-full bg-white text-left">
-                    <thead class="bg-gray-50 text-gray-600 text-sm uppercase font-semibold border-b border-gray-200">
+                    <thead class="bg-gray-50/50 text-gray-500 text-xs uppercase font-bold tracking-wider border-b border-gray-200">
                         <tr>
                             <th class="py-3 px-6 w-16 text-center">No</th>
                             <th class="py-3 px-6">Judul Tugas</th>
@@ -36,7 +36,7 @@
                     </thead>
                     <tbody class="text-gray-700 text-sm divide-y divide-gray-100">
                         @forelse($tugas as $index => $item)
-                        <tr class="hover:bg-gray-50 transition-colors">
+                        <tr class="hover:bg-emerald-50/30 transition-colors group">
                             <td class="py-4 px-6 text-center text-gray-500 font-mono text-xs">{{ $index + 1 }}</td>
                             <td class="py-4 px-6">
                                 <div class="font-bold text-gray-900 truncate max-w-xs">{{ $item->judul }}</div>
@@ -54,9 +54,9 @@
                                         $level = $item->tingkatAiasAkhir->nama_tingkat;
                                         $colorClass = 'bg-gray-100 text-gray-800';
                                         if (str_contains($level, '1')) $colorClass = 'bg-emerald-50 text-emerald-700 border-emerald-100';
-                                        elseif (str_contains($level, '2')) $colorClass = 'bg-blue-50 text-blue-700 border-blue-100';
+                                        elseif (str_contains($level, '2')) $colorClass = 'bg-emerald-50 text-emerald-700 border-blue-100';
                                         elseif (str_contains($level, '3')) $colorClass = 'bg-amber-50 text-amber-700 border-amber-100';
-                                        elseif (str_contains($level, '4')) $colorClass = 'bg-indigo-50 text-indigo-700 border-indigo-100';
+                                        elseif (str_contains($level, '4')) $colorClass = 'bg-emerald-50 text-emerald-700 border-indigo-100';
                                         elseif (str_contains($level, '5')) $colorClass = 'bg-rose-50 text-rose-700 border-rose-100';
                                     @endphp
                                     <span class="{{ $colorClass }} py-1 px-3 rounded text-[11px] font-bold border uppercase tracking-wide inline-block min-w-[70px]" title="{{ $item->tingkatAiasAkhir->deskripsi }}">
@@ -68,7 +68,7 @@
                             </td>
                             <td class="py-4 px-6 text-center">
                                 @if(strtolower($item->status_publikasi) === 'published')
-                                    <span class="inline-flex items-center text-blue-600 font-bold text-xs uppercase tracking-tighter">
+                                    <span class="inline-flex items-center text-emerald-600 font-bold text-xs uppercase tracking-tighter">
                                         <i class="fas fa-check-circle mr-1.5"></i> Terbit
                                     </span>
                                 @else

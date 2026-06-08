@@ -10,7 +10,7 @@
     <div class="max-w-4xl mx-auto">
         
         <div class="mb-6">
-            <a href="javascript:history.back()" class="text-sm font-medium text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-2">
+            <a href="javascript:history.back()" class="text-sm font-medium text-gray-500 hover:text-emerald-600 transition-colors flex items-center gap-2">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
         </div>
@@ -26,17 +26,17 @@
             </div>
         @endif
 
-        <form id="task-form" action="{{ route('dosen.tugas.store') }}" method="POST" class="bg-white shadow-sm rounded-lg border border-gray-100 overflow-hidden">
+        <form id="task-form" action="{{ route('dosen.tugas.store') }}" method="POST" class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 overflow-hidden">
             @csrf
             
-            <div class="px-6 py-5 border-b border-gray-200 bg-gray-50">
+            <div class="px-8 py-6 border-b border-gray-100/80 bg-white">
                 <h3 class="font-bold text-gray-800 text-lg">Informasi Tugas & Kriteria Asesmen</h3>
                 <p class="text-sm text-gray-500">Lengkapi detail dasar tugas beserta kriteria klasifikasi AI-nya.</p>
             </div>
             <div class="p-6 space-y-6">
                 <div>
                     <label for="kelas_kuliah_id" class="block text-sm font-medium text-gray-700 mb-2">Pilih Kelas Mata Kuliah <span class="text-red-500">*</span></label>
-                    <select name="kelas_kuliah_id" id="kelas_kuliah_id" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                    <select name="kelas_kuliah_id" id="kelas_kuliah_id" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                         <option value="">-- Pilih Kelas --</option>
                         @foreach($kelasKuliah as $kelas)
                             <option value="{{ $kelas->id }}" {{ (old('kelas_kuliah_id') == $kelas->id || request('kelas_id') == $kelas->id) ? 'selected' : '' }}>
@@ -47,11 +47,11 @@
                 </div>
                 <div>
                     <label for="judul" class="block text-sm font-medium text-gray-700 mb-2">Judul Tugas <span class="text-red-500">*</span></label>
-                    <input type="text" name="judul" id="judul" value="{{ old('judul') }}" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Contoh: Makalah Analisis Algoritma" required>
+                    <input type="text" name="judul" id="judul" value="{{ old('judul') }}" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" placeholder="Contoh: Makalah Analisis Algoritma" required>
                 </div>
                 <div>
                     <label for="deskripsi" class="block text-sm font-medium text-gray-700 mb-2">Deskripsi/Instruksi Tugas <span class="text-red-500">*</span></label>
-                    <textarea name="deskripsi" id="deskripsi" rows="4" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" placeholder="Tuliskan instruksi pengerjaan tugas secara detail di sini..." required>{{ old('deskripsi') }}</textarea>
+                    <textarea name="deskripsi" id="deskripsi" rows="4" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" placeholder="Tuliskan instruksi pengerjaan tugas secara detail di sini..." required>{{ old('deskripsi') }}</textarea>
                 </div>
                 
                 <hr class="border-gray-200">
@@ -62,7 +62,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Lingkungan Pengerjaan <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Keterangan:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="lingkungan_pengerjaan" name="kriteria_tugas[lingkungan_pengerjaan]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        <select id="lingkungan_pengerjaan" name="kriteria_tugas[lingkungan_pengerjaan]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                             <option value="">-- Pilih Lingkungan Pengerjaan --</option>
                             @foreach($kriteriaOptions['lingkungan_pengerjaan'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.lingkungan_pengerjaan') == $option ? 'selected' : '' }}>
@@ -87,7 +87,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Tingkat Proses Kognitif <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Tingkat Proses Kognitif:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -102,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="tingkat_proses_kognitif" name="kriteria_tugas[tingkat_proses_kognitif]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent kognitif-select" required>
+                        <select id="tingkat_proses_kognitif" name="kriteria_tugas[tingkat_proses_kognitif]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent kognitif-select" required>
                             <option value="">-- Pilih Tingkat Proses Kognitif --</option>
                             @foreach($kriteriaOptions['tingkat_proses_kognitif'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.tingkat_proses_kognitif') == $option ? 'selected' : '' }}>
@@ -116,7 +116,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700" for="aktivitas_pembelajaran">Aktivitas Pembelajaran <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Panduan Opsi:</p>
                                     <p>Bentuk aktivitas spesifik ini akan menyesuaikan dengan Tingkat Proses Kognitif yang Anda pilih sebelumnya.</p>
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="aktivitas_pembelajaran" name="aktivitas_pembelajaran" class="w-full bg-white border border-gray-300 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600" required>
+                        <select id="aktivitas_pembelajaran" name="aktivitas_pembelajaran" class="w-full bg-white border border-gray-300 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600" required>
                             <option value="">Pilih Tingkat Kognitif Terlebih Dahulu</option>
                         </select>
                     </div>
@@ -133,7 +133,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Jenis Target Pengetahuan <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Dimensi Pengetahuan:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="dimensi_pengetahuan" name="kriteria_tugas[dimensi_pengetahuan]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        <select id="dimensi_pengetahuan" name="kriteria_tugas[dimensi_pengetahuan]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                             <option value="">-- Pilih Jenis Target Pengetahuan --</option>
                             @foreach($kriteriaOptions['dimensi_pengetahuan'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.dimensi_pengetahuan') == $option ? 'selected' : '' }}>
@@ -165,7 +165,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Kompleksitas Jawaban <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Struktur Kompleksitas Respons:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -179,7 +179,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="struktur_kompleksitas_respons" name="kriteria_tugas[struktur_kompleksitas_respons]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        <select id="struktur_kompleksitas_respons" name="kriteria_tugas[struktur_kompleksitas_respons]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                             <option value="">-- Pilih Kompleksitas Jawaban --</option>
                             @foreach($kriteriaOptions['struktur_kompleksitas_respons'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.struktur_kompleksitas_respons') == $option ? 'selected' : '' }}>
@@ -199,7 +199,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Konteks & Skenario Tugas <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Keterangan:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -211,7 +211,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="tingkat_keaslian_konteks" name="kriteria_tugas[tingkat_keaslian_konteks]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        <select id="tingkat_keaslian_konteks" name="kriteria_tugas[tingkat_keaslian_konteks]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                             <option value="">-- Pilih Konteks & Skenario --</option>
                             @foreach($kriteriaOptions['tingkat_keaslian_konteks'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.tingkat_keaslian_konteks') == $option ? 'selected' : '' }}>
@@ -229,7 +229,7 @@
                         <div class="flex items-center mb-2">
                             <label class="block text-sm font-medium text-gray-700">Fokus Penilaian <span class="text-red-500">*</span></label>
                             <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-blue-600 cursor-help transition-colors"></i>
+                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
                                     <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Fokus Penilaian:</p>
                                     <ul class="list-disc pl-4 space-y-1">
@@ -241,7 +241,7 @@
                                 </div>
                             </div>
                         </div>
-                        <select id="fokus_evaluasi" name="kriteria_tugas[fokus_evaluasi]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" required>
+                        <select id="fokus_evaluasi" name="kriteria_tugas[fokus_evaluasi]" class="w-full bg-white border border-gray-300 text-gray-700 py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent" required>
                             <option value="">-- Pilih Fokus Penilaian --</option>
                             @foreach($kriteriaOptions['fokus_evaluasi'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.fokus_evaluasi') == $option ? 'selected' : '' }}>
@@ -255,15 +255,15 @@
                         </select>
                     </div>
                 </div>
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 mt-6">
-                    <p class="text-sm text-blue-700"><strong>Penting:</strong> Setelah Anda menyimpan, Mesin Inferensi akan secara otomatis mengevaluasi kombinasi kriteria di atas and menetapkan Tingkat AI Score yang diizinkan untuk tugas ini.</p>
+                <div class="bg-emerald-50 border-l-4 border-emerald-600 p-4 mt-6">
+                    <p class="text-sm text-emerald-700"><strong>Penting:</strong> Setelah Anda menyimpan, Mesin Inferensi akan secara otomatis mengevaluasi kombinasi kriteria di atas and menetapkan Tingkat AI Score yang diizinkan untuk tugas ini.</p>
                 </div>
             </div>
             <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex items-center justify-end gap-3">
-                <button type="submit" name="action" value="draft" class="px-5 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+                <button type="submit" name="action" value="draft" class="px-5 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-600">
                     Simpan Draft
                 </button>
-                <button type="submit" name="action" value="publish" class="px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-blue-700 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                <button type="submit" name="action" value="publish" class="px-5 py-2 border border-transparent rounded-md shadow-sm text-sm font-bold text-white bg-emerald-700 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
                     <i class="fas fa-check-circle mr-2"></i> Simpan & Klasifikasi AI Score
                 </button>
             </div>

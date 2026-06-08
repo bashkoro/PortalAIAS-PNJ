@@ -15,10 +15,10 @@
     <div class="bg-white border-r border-gray-200 h-16 fixed bottom-0 md:sticky md:top-0 md:h-screen z-30 w-full md:w-64 border-t md:border-t-0">
         <div class="md:h-[73px] md:w-full md:flex md:items-center md:justify-center hidden border-b border-gray-200">
             <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-md">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center shadow-md">
                     <span class="text-white font-bold text-sm">AI</span>
                 </div>
-                <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-blue-600">PNJ</span></span>
+                <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-emerald-600">PNJ</span></span>
             </div>
         </div>
         <ul class="flex flex-row md:flex-col py-0 md:py-4 text-center md:text-left justify-around md:justify-start w-full h-full md:h-auto">
@@ -28,8 +28,8 @@
                 </a>
             </li>
             <li class="flex-1 md:w-full md:mb-2">
-                <a href="{{ route('mahasiswa.deklarasi.index') }}" class="block py-3 md:py-3 pl-1 align-middle text-blue-600 no-underline border-b-4 border-blue-600 md:border-b-0 md:border-l-4 hover:bg-gray-50 transition-colors bg-blue-50">
-                    <i class="fas fa-file-signature pr-0 md:pr-3 text-blue-600 ml-4"></i><span class="pb-1 md:pb-0 text-sm md:text-base text-blue-600 font-medium md:font-semibold block md:inline-block">Deklarasi</span>
+                <a href="{{ route('mahasiswa.deklarasi.index') }}" class="block py-3 md:py-3 pl-1 align-middle text-emerald-600 no-underline border-b-4 border-emerald-600 md:border-b-0 md:border-l-4 hover:bg-gray-50 transition-colors bg-emerald-50">
+                    <i class="fas fa-file-signature pr-0 md:pr-3 text-emerald-600 ml-4"></i><span class="pb-1 md:pb-0 text-sm md:text-base text-emerald-600 font-medium md:font-semibold block md:inline-block">Deklarasi</span>
                 </a>
             </li>
             <li class="flex-1 md:w-full md:mb-2">
@@ -51,10 +51,10 @@
             </div>
             <div class="md:hidden">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center shadow-md">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-600 to-emerald-800 flex items-center justify-center shadow-md">
                         <span class="text-white font-bold text-sm">AI</span>
                     </div>
-                    <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-blue-600">PNJ</span></span>
+                    <span class="font-bold text-xl tracking-tight text-gray-900">Score<span class="text-emerald-600">PNJ</span></span>
                 </div>
             </div>
             <div class="flex items-center">
@@ -76,10 +76,10 @@
             @endif
 
             <!-- Task Detail Card -->
-            <div class="bg-white shadow-sm rounded-lg border border-gray-200 mb-6 overflow-hidden">
-                <div class="bg-blue-50 border-b border-blue-50 p-6">
+            <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 border border-gray-200 mb-6 overflow-hidden">
+                <div class="bg-emerald-50 border-b border-blue-50 p-6">
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="text-blue-700 text-sm font-semibold uppercase tracking-wider">Detail Tugas</span>
+                        <span class="text-emerald-700 text-sm font-semibold uppercase tracking-wider">Detail Tugas</span>
                         <span class="text-gray-400">•</span>
                         <span class="text-gray-600 text-sm">{{ $tugas->kelasKuliah->mataKuliah->nama_mk ?? '-' }}</span>
                     </div>
@@ -90,7 +90,7 @@
                     <div>
                         <p class="text-sm text-gray-500 font-medium mb-1">Batas Maksimal Penggunaan AI yang Diizinkan:</p>
                         <div class="flex items-center gap-3">
-                            <span class="bg-blue-600 text-white font-bold py-1.5 px-3 rounded-md text-sm">
+                            <span class="bg-emerald-600 text-white font-bold py-1.5 px-3 rounded-md text-sm">
                                 {{ $tugas->tingkatAiasAkhir->nama_tingkat ?? 'Tidak Diketahui' }}
                             </span>
                             <span class="text-gray-700 text-sm font-medium">{{ $tugas->tingkatAiasAkhir->deskripsi ?? '' }}</span>
@@ -100,7 +100,7 @@
             </div>
 
             <!-- Declaration Form -->
-            <form action="{{ route('mahasiswa.deklarasi.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
+            <form action="{{ route('mahasiswa.deklarasi.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 border border-gray-200 overflow-hidden">
                 @csrf
                 <input type="hidden" name="tugas_id" value="{{ $tugas->id }}">
                 

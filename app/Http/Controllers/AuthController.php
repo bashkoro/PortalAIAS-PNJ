@@ -48,7 +48,6 @@ class AuthController extends Controller
             'nama' => 'required|string|max:100',
             'email' => 'required|string|email|max:100|unique:pengguna,email',
             'password' => 'required|string|min:8|confirmed',
-            'hak_akses' => 'required|in:Mahasiswa,Dosen',
             'program_studi_id' => 'required|exists:program_studi,id'
         ], [
             'nama.required' => 'Nama wajib diisi.',
@@ -58,13 +57,11 @@ class AuthController extends Controller
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
-            'hak_akses.required' => 'Pilih hak akses.',
-            'hak_akses.in' => 'Hak akses tidak valid.',
             'program_studi_id.required' => 'Pilih program studi.',
             'program_studi_id.exists' => 'Program studi tidak valid.'
         ]);
 
-        $hakAkses = HakAkses::where('nama_hak_akses', $request->hak_akses)->first();
+        $hakAkses = HakAkses::where('nama_hak_akses', 'Mahasiswa')->first();
 
         Pengguna::create([
             'nama' => $request->nama,
