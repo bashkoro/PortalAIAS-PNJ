@@ -76,7 +76,6 @@
                 <div>
                     <div class="flex items-center justify-between mb-2">
                         <label class="block text-sm font-semibold text-gray-700" for="password">Kata Sandi</label>
-                        <a href="#" class="text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors">Lupa sandi?</a>
                     </div>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
