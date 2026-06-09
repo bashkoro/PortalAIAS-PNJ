@@ -113,6 +113,7 @@ Route::middleware('auth')->group(function () {
             // Deklarasi AI
             Route::get('/deklarasi/create', [MahasiswaDeklarasi::class, 'create'])->name('deklarasi.create');
             Route::post('/deklarasi', [MahasiswaDeklarasi::class, 'store'])->name('deklarasi.store');
+            Route::get('/deklarasi/{deklarasi}', [MahasiswaDeklarasi::class, 'show'])->name('deklarasi.show');
             
             // Riwayat Deklarasi
             Route::get('/riwayat', [MahasiswaRiwayat::class, 'index'])->name('riwayat');

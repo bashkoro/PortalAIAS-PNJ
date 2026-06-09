@@ -3,6 +3,9 @@
 @section('title', 'Formulir Deklarasi Mandiri')
 
 @section('content')
+    <!-- Menambahkan Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
     <div class="p-4 md:p-8 max-w-4xl mx-auto">
         
         <div class="mb-6">
@@ -52,7 +55,7 @@
         </div>
 
         <!-- Declaration Form -->
-        <form action="{{ route('mahasiswa.deklarasi.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('mahasiswa.deklarasi.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="{ isSubmitting: false, fileName: '' }" @submit.once="isSubmitting = true">
             @csrf
             <input type="hidden" name="tugas_id" value="{{ $tugas->id }}">
             
@@ -113,15 +116,22 @@
                     <div>
                         <label for="bukti_file" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Unggah Screenshot Bukti (JPG/PNG/PDF)</label>
                         <div class="flex items-center justify-center w-full">
-                            <label class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-emerald-50 hover:border-blue-400 transition-all group">
+                            <label class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-300 border-dashed rounded-2xl cursor-pointer bg-gray-50 hover:bg-emerald-50 hover:border-emerald-400 transition-all group">
                                 <div class="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
-                                    <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3 group-hover:text-blue-500 transition-colors"></i>
+                                    <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3 group-hover:text-emerald-500 transition-colors"></i>
                                     <p class="mb-1 text-sm text-gray-500 font-black uppercase tracking-tighter">Klik atau seret berkas ke sini</p>
-                                    <p class="text-[10px] text-gray-400 font-bold">PDF, PNG, atau JPG (Maks. 2MB)</p>
+                                    <p class="text-[10px] text-gray-400 font-bold">Maksimal ukuran file: 5 MB (Format: PDF, JPG, PNG)</p>
                                 </div>
-                                <input type="file" name="bukti_file" id="bukti_file" accept=".jpg,.jpeg,.png,.pdf" class="hidden" />
+                                <input type="file" name="bukti_file" id="bukti_file" accept=".pdf,.jpg,.jpeg,.png" class="hidden" @change="fileName = $event.target.files[0] ? $event.target.files[0].name : ''" />
                             </label>
                         </div>
+                        <!-- File Name Preview (Muncul ketika file dipilih) -->
+                        <template x-if="fileName">
+                            <div class="mt-3 flex items-center text-sm text-emerald-700 bg-emerald-50 p-3 rounded-md border border-emerald-200">
+                                <i class="fas fa-paperclip mr-2 flex-shrink-0"></i>
+                                <span x-text="fileName" class="font-medium truncate"></span>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -140,8 +150,12 @@
             </div>
 
             <div class="flex justify-end pt-4">
-                <button type="submit" class="w-full md:w-auto px-12 py-5 bg-emerald-600 text-white rounded-2xl font-black text-sm hover:bg-emerald-700 transition-all shadow-2xl shadow-blue-200 flex items-center justify-center gap-3 uppercase tracking-widest active:scale-95">
-                    <i class="fas fa-paper-plane opacity-70 text-xs"></i> Kirim Deklarasi & Proses AIAS
+                <button type="submit" 
+                        :disabled="isSubmitting"
+                        :class="isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-700 active:scale-95'"
+                        class="w-full md:w-auto px-12 py-5 text-white rounded-2xl font-black text-sm transition-all shadow-2xl shadow-blue-200 flex items-center justify-center gap-3 uppercase tracking-widest">
+                    <span x-show="!isSubmitting" class="flex items-center gap-3"><i class="fas fa-paper-plane opacity-70 text-xs"></i> Kirim Deklarasi & Proses AIAS</span>
+                    <span x-show="isSubmitting" style="display: none;" class="flex items-center gap-3"><i class="fas fa-spinner fa-spin text-white"></i> Mengunggah Bukti... ⏳</span>
                 </button>
             </div>
         </form>

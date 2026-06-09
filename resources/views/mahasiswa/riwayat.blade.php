@@ -89,7 +89,7 @@
                                 <th class="py-3 px-6 text-left border-b border-gray-200">Tugas & Mata Kuliah</th>
                                 <th class="py-3 px-6 text-center border-b border-gray-200">Waktu Submit</th>
                                 <th class="py-3 px-6 text-center border-b border-gray-200">Level AIAS</th>
-                                <th class="py-3 px-6 text-center border-b border-gray-200">Lampiran</th>
+                                <th class="py-3 px-6 text-center border-b border-gray-200">Detail Deklarasi</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700 text-sm">
@@ -106,13 +106,9 @@
                                     <span class="bg-emerald-50 text-emerald-700 py-1 px-3 rounded-full text-xs font-bold">{{ $item->tugas->tingkatAiasAkhir->nama_tingkat ?? '-' }}</span>
                                 </td>
                                 <td class="py-4 px-6 text-center">
-                                    @if($item->path_file_bukti)
-                                        <a href="{{ asset('storage/' . $item->path_file_bukti) }}" target="_blank" class="text-emerald-600 hover:text-emerald-700 underline flex items-center justify-center gap-1">
-                                            <i class="fas fa-file-alt"></i> Lihat Bukti
-                                        </a>
-                                    @else
-                                        <span class="text-gray-400 text-xs italic">Tidak ada</span>
-                                    @endif
+                                    <a href="{{ route('mahasiswa.deklarasi.show', $item->id) }}" class="inline-flex items-center px-3 py-1.5 border border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 text-xs font-semibold">
+                                        <i class="fas fa-eye mr-1.5"></i> Lihat Detail
+                                    </a>
                                 </td>
                             </tr>
                             @empty

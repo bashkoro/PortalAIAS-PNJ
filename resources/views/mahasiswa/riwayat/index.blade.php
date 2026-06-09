@@ -32,7 +32,7 @@
                             <th class="py-4 px-6">Tugas & Mata Kuliah</th>
                             <th class="py-4 px-6 text-center">Tanggal Deklarasi</th>
                             <th class="py-4 px-6 text-center">Klasifikasi AIAS</th>
-                            <th class="py-4 px-6 text-center">Bukti</th>
+                            <th class="py-4 px-6 text-center">Detail Deklarasi</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700 text-sm divide-y divide-gray-50">
@@ -68,13 +68,9 @@
                                 @endif
                             </td>
                             <td class="py-5 px-6 text-center">
-                                @if($item->path_file_bukti)
-                                    <a href="{{ asset('storage/' . $item->path_file_bukti) }}" target="_blank" class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 border border-gray-100 transition-all">
-                                        <i class="fas fa-file-pdf"></i>
-                                    </a>
-                                @else
-                                    <span class="text-gray-300"><i class="fas fa-minus text-xs"></i></span>
-                                @endif
+                                <a href="{{ route('mahasiswa.deklarasi.show', $item->id) }}" class="inline-flex items-center px-3 py-1.5 border border-emerald-500 text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 text-xs font-semibold">
+                                    <i class="fas fa-eye mr-1.5"></i> Lihat Detail
+                                </a>
                             </td>
                         </tr>
                         @empty

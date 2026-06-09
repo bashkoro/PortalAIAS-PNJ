@@ -102,4 +102,17 @@ class DeklarasiController extends Controller
 
         return redirect()->route('mahasiswa.riwayat')->with('success', 'Deklarasi AI berhasil dikirim dan telah diklasifikasi.');
     }
+
+    /**
+     * Display the specified declaration.
+     */
+    public function show($id)
+    {
+        $deklarasi = Deklarasi::with(['tugas.tingkatAiasAkhir', 'tingkatAias'])
+            ->where('id', $id)
+            ->where('mahasiswa_id', Auth::id())
+            ->firstOrFail();
+
+        return view('mahasiswa.deklarasi.show', compact('deklarasi'));
+    }
 }
