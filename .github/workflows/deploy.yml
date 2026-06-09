@@ -19,7 +19,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/aiscore.bijak-ai.web.id # Sesuaikan dengan folder root domainmu di cPanel
+        server-dir: /public_html/aiscore.bijak-ai.web.id/ # Sesuaikan dengan folder root domainmu di cPanel
         exclude: |
           **/.git*
           **/.git*/**
