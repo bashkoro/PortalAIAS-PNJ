@@ -27,6 +27,45 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
+        /* Custom transitions for AIAS levels */
+        .level-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .level-card .card-inner {
+            background-color: white;
+            border: 1px solid #f3f4f6;
+            transition: all 0.5s ease;
+        }
+        /* Unselected State */
+        .level-card .level-title { color: #064e3b; }
+        .level-card .level-desc { color: #4b5563; }
+        .level-card .level-num { color: #a7f3d0; transition: all 0.5s ease; } /* Solid emerald-200 for better visibility */
+        .level-card .level-icon { background-color: #f0fdf4; color: #059669; }
+
+        /* Active/Selected State */
+        .level-card.active {
+            transform: translateY(-8px);
+        }
+        .level-card.active .card-inner {
+            background-color: #064e3b !important; /* emerald-900 */
+            border-color: #059669 !important; /* emerald-600 */
+            box-shadow: 0 25px 50px -12px rgba(6, 78, 59, 0.25);
+        }
+        .level-card.active .level-num { color: white !important; opacity: 0.3 !important; } /* More visible watermark when active */
+        .level-card.active .level-title { color: white !important; }
+        .level-card.active .level-desc { color: #d1fae5 !important; }
+        .level-card.active .level-icon { 
+            background-color: #065f46 !important; 
+            color: #6ee7b7 !important;
+            transform: scale(1.1);
+        }
+        .level-card.active .level-example-label { color: #34d399 !important; }
+        .level-card.active .level-example-box { 
+            background-color: rgba(255, 255, 255, 0.1) !important; 
+            color: white !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 antialiased selection:bg-emerald-600 selection:text-white overflow-x-hidden">
@@ -44,6 +83,7 @@
             
             <nav class="hidden md:flex space-x-8">
                 <a href="#fitur" class="text-gray-600 hover:text-emerald-600 font-medium transition-colors">Fitur</a>
+                <a href="#level-aias" class="text-gray-600 hover:text-emerald-600 font-medium transition-colors">Level AIAS</a>
                 <a href="#cara-kerja" class="text-gray-600 hover:text-emerald-600 font-medium transition-colors">Cara Kerja</a>
             </nav>
 
@@ -155,6 +195,164 @@
         </div>
     </section>
 
+    <!-- AIAS Levels Section -->
+    <section id="level-aias" class="py-24 bg-white relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-50 via-emerald-200 to-emerald-50"></div>
+        <div class="absolute -right-24 top-24 w-64 h-64 bg-emerald-50 rounded-full blur-3xl opacity-50"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <div class="max-w-2xl">
+                    <h2 class="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                        <span class="w-8 h-[2px] bg-emerald-600"></span>
+                        Framework Klasifikasi
+                    </h2>
+                    <h3 class="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                        Eksplorasi <span class="text-emerald-600">Level AIAS</span>
+                    </h3>
+                    <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+                        Standar klasifikasi penggunaan AI di PNJ yang diadaptasi dari framework akademik global. 
+                        Pilih level untuk melihat progres integrasi teknologi.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Standardized by</span>
+                    <div class="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-semibold shadow-lg shadow-gray-200">
+                        Perkins et al., 2025
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progression Indicator (Desktop only) -->
+            <div class="hidden md:flex mb-12 items-center px-4">
+                <div class="flex-none text-xs font-bold text-emerald-600 uppercase tracking-tighter w-24">Strict Control</div>
+                <div class="flex-grow h-2 bg-gray-100 rounded-full mx-4 overflow-hidden relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-600 via-emerald-400 to-amber-400 opacity-20"></div>
+                    <div id="progression-bar" class="absolute top-0 left-0 h-full w-1/5 bg-emerald-600 rounded-full shadow-[0_0_10px_rgba(5,150,105,0.5)] transition-all duration-700 ease-in-out"></div>
+                </div>
+                <div class="flex-none text-xs font-bold text-amber-600 uppercase tracking-tighter w-24 text-right">Full Integration</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                <!-- Level 1 -->
+                <div onclick="setActiveLevel(1)" class="level-card active relative group h-full cursor-pointer">
+                    <div class="card-inner h-full rounded-3xl p-8 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="level-icon w-12 h-12 rounded-2xl shadow-sm flex items-center justify-center transition-all duration-500">
+                                <i class="fas fa-user-edit text-xl"></i>
+                            </div>
+                            <span class="level-num text-3xl font-black transition-colors">01</span>
+                        </div>
+                        <h4 class="level-title text-xl font-bold mb-3 transition-colors">No AI</h4>
+                        <p class="level-desc text-sm leading-relaxed mb-6 transition-colors">
+                            Penyelesaian tugas sepenuhnya tanpa bantuan AI untuk validasi hasil belajar murni.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-gray-100/20 level-border transition-colors">
+                            <span class="level-example-label text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Contoh Kasus:</span>
+                            <p class="level-example-box text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg p-2 transition-all duration-500">
+                                Ujian tertutup, refleksi personal, atau tugas di kelas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 2 -->
+                <div onclick="setActiveLevel(2)" class="level-card relative group h-full cursor-pointer">
+                    <div class="card-inner h-full rounded-3xl p-8 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="level-icon w-12 h-12 rounded-2xl shadow-sm flex items-center justify-center transition-all duration-500">
+                                <i class="fas fa-lightbulb text-xl"></i>
+                            </div>
+                            <span class="level-num text-3xl font-black transition-colors">02</span>
+                        </div>
+                        <h4 class="level-title text-xl font-bold mb-3 transition-colors">AI Planning</h4>
+                        <p class="level-desc text-sm leading-relaxed mb-6 transition-colors">
+                            AI digunakan terbatas pada tahap brainstorming dan riset awal sebelum pengerjaan.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-gray-100/20 level-border transition-colors">
+                            <span class="level-example-label text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Contoh Kasus:</span>
+                            <p class="level-example-box text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg p-2 transition-all duration-500">
+                                Pencarian ide, pembuatan outline, atau riset literatur.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 3 -->
+                <div onclick="setActiveLevel(3)" class="level-card relative group h-full cursor-pointer">
+                    <div class="card-inner h-full rounded-3xl p-8 flex flex-col relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-6 relative z-10">
+                            <div class="level-icon w-12 h-12 rounded-2xl shadow-sm flex items-center justify-center transition-all duration-500">
+                                <i class="fas fa-hands-helping text-xl"></i>
+                            </div>
+                            <span class="level-num text-3xl font-black transition-colors">03</span>
+                        </div>
+                        <h4 class="level-title text-xl font-bold mb-3 relative z-10 transition-colors">Collaboration</h4>
+                        <p class="level-desc text-sm leading-relaxed mb-6 transition-colors relative z-10">
+                            Kolaborasi aktif dalam penyusunan draf dan perbaikan teks dengan evaluasi kritis.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-gray-100/20 level-border transition-colors relative z-10">
+                            <span class="level-example-label text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Contoh Kasus:</span>
+                            <p class="level-example-box text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg p-2 transition-all duration-500">
+                                Proofreading AI, debugging kode, atau penyempurnaan draf.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 4 -->
+                <div onclick="setActiveLevel(4)" class="level-card relative group h-full cursor-pointer">
+                    <div class="card-inner h-full rounded-3xl p-8 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="level-icon w-12 h-12 rounded-2xl shadow-sm flex items-center justify-center transition-all duration-500">
+                                <i class="fas fa-robot text-xl"></i>
+                            </div>
+                            <span class="level-num text-3xl font-black transition-colors">04</span>
+                        </div>
+                        <h4 class="level-title text-xl font-bold mb-3 transition-colors">Full AI</h4>
+                        <p class="level-desc text-sm leading-relaxed mb-6 transition-colors">
+                            AI digunakan secara ekstensif untuk mencapai tujuan asesmen yang bersifat kompleks.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-gray-100/20 level-border transition-colors">
+                            <span class="level-example-label text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Contoh Kasus:</span>
+                            <p class="level-example-box text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg p-2 transition-all duration-500">
+                                Analisis data besar, otomasi laporan, atau simulasi AI.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Level 5 -->
+                <div onclick="setActiveLevel(5)" class="level-card relative group h-full cursor-pointer">
+                    <div class="card-inner h-full rounded-3xl p-8 flex flex-col">
+                        <div class="flex justify-between items-start mb-6">
+                            <div class="level-icon w-12 h-12 rounded-2xl shadow-sm flex items-center justify-center transition-all duration-500">
+                                <i class="fas fa-flask text-xl"></i>
+                            </div>
+                            <span class="level-num text-3xl font-black transition-colors">05</span>
+                        </div>
+                        <h4 class="level-title text-xl font-bold mb-3 transition-colors">AI Exploration</h4>
+                        <p class="level-desc text-sm leading-relaxed mb-6 transition-colors">
+                            Eksplorasi inovatif melalui ko-desain asesmen untuk aplikasi AI yang unik.
+                        </p>
+                        <div class="mt-auto pt-6 border-t border-gray-100/20 level-border transition-colors">
+                            <span class="level-example-label text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Contoh Kasus:</span>
+                            <p class="level-example-box text-xs font-medium text-emerald-700 bg-emerald-50 rounded-lg p-2 transition-all duration-500">
+                                R&D aplikasi AI baru, seni generatif, atau proyek inovasi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile hint -->
+            <div class="mt-12 text-center md:hidden">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest animate-pulse">Pilih kartu untuk detail</span>
+            </div>
+        </div>
+    </section>
+
     <!-- How It Works Section -->
     <section id="cara-kerja" class="py-24 bg-white relative overflow-hidden border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -220,6 +418,33 @@
             nav.classList.remove('border-emerald-800/50');
         }
     });
+
+    // AIAS Level Interactivity
+    function setActiveLevel(level) {
+        // Update cards
+        const cards = document.querySelectorAll('.level-card');
+        cards.forEach((card, index) => {
+            if (index + 1 === level) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+
+        // Update progression bar
+        const progressBar = document.getElementById('progression-bar');
+        const percentage = (level / 5) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        // Update progression bar color based on level
+        if (level <= 2) {
+            progressBar.style.backgroundColor = '#059669'; // emerald-600
+        } else if (level <= 4) {
+            progressBar.style.backgroundColor = '#10b981'; // emerald-500
+        } else {
+            progressBar.style.backgroundColor = '#f59e0b'; // amber-500
+        }
+    }
 </script>
 
 </body>
