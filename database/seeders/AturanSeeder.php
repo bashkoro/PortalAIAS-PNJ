@@ -76,7 +76,6 @@ class AturanSeeder extends Seeder
                                     $level = 1;
                                     
                                     if ($l === 'Terkendali Penuh / Terawasi') {
-                                        // Controlled env: mostly Level 1, maybe Level 2 if creating/metacognitive
                                         if ($kog === 'Mencipta (Creating)' || $pen === 'Pengetahuan Metakognitif') {
                                             $level = 2;
                                         } else {
@@ -90,7 +89,7 @@ class AturanSeeder extends Seeder
                                                + $vulnWeights['konteks'][$kon] 
                                                + $vulnWeights['evaluasi'][$ev];
                                         
-                                        // Max score is 5+3+4+2+2 = 16
+                                        // Max score 5+3+4+2+2 = 16
                                         if ($score >= 12) {
                                             $level = 5; // Very vulnerable, must assume full AI use
                                         } elseif ($score >= 8) {
@@ -117,7 +116,7 @@ class AturanSeeder extends Seeder
 
                                     $ruleCount++;
 
-                                    // Chunk inserts to prevent memory issues
+                                    // seeder bertahap buat ngindari memori isu
                                     if (count($aturanInserts) >= 500) {
                                         DB::table('aturan')->insert($aturanInserts);
                                         DB::table('kondisi_aturan')->insert($kondisiInserts);

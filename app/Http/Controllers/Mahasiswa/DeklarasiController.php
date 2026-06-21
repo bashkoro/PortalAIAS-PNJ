@@ -39,23 +39,7 @@ class DeklarasiController extends Controller
             return redirect()->route('mahasiswa.riwayat')->with('info', 'Anda sudah mengirimkan deklarasi untuk tugas ini.');
         }
 
-        // AID Framework Aspects
-        $daftar_kondisi = [
-            'Conceptualization' => 'AI membantu memunculkan ide/topik awal.',
-            'Methodology' => 'AI menyusun langkah kerja atau struktur tugas.',
-            'Info Collection' => 'AI mencari referensi atau meringkas bacaan.',
-            'Data Collection' => 'AI membuat form/kuesioner sederhana.',
-            'Execution' => 'AI menyusun draft atau outline tugas.',
-            'Data Curation' => 'AI menyusun tabel atau data hasil observasi.',
-            'Data Analysis' => 'AI membaca grafik atau menjelaskan data dasar.',
-            'Interpretation' => 'AI membantu menyimpulkan atau merangkum poin penting.',
-            'Visualization' => 'AI membuat infografis, bagan, atau diagram.',
-            'Writing - Editing' => 'AI koreksi tata bahasa atau struktur kalimat.',
-            'Writing - Translation' => 'AI digunakan untuk menerjemahkan isi tugas.',
-            'Project Management' => 'AI membantu menjadwalkan atau membagi tugas kelompok.'
-        ];
-
-        return view('mahasiswa.deklarasi.create', compact('tugas', 'daftar_kondisi'));
+        return view('mahasiswa.deklarasi.create', compact('tugas'));
     }
 
     /**
@@ -66,12 +50,16 @@ class DeklarasiController extends Controller
         $request->validate([
             'tugas_id' => 'required|exists:tugas,id',
             'pernyataan_disetujui' => 'required|accepted',
-            'kondisi_penggunaan' => 'required|array|min:1',
-            'bukti_file' => 'nullable|file|mimes:pdf,jpg,png|max:2048'
+            'nama_platform_ai' => 'required|string|max:50',
+            'prompt_dikirim' => 'required|string',
+            'respons_ai' => 'required|string',
+            'link_conversation' => 'nullable|url',
+            'bukti_file' => 'nullable|file|mimes:pdf,jpg,png|max:5120'
         ], [
             'pernyataan_disetujui.accepted' => 'Anda harus menyetujui pernyataan integritas akademik.',
-            'kondisi_penggunaan.required' => 'Pilih setidaknya satu aspek penggunaan AI.',
-            'kondisi_penggunaan.min' => 'Pilih setidaknya satu aspek penggunaan AI.'
+            'nama_platform_ai.required' => 'Platform AI wajib diisi.',
+            'prompt_dikirim.required' => 'Prompt yang dikirim wajib diisi.',
+            'respons_ai.required' => 'Ringkasan respons AI wajib diisi.'
         ]);
 
         $user = Auth::user();
@@ -100,7 +88,14 @@ class DeklarasiController extends Controller
             'waktu_pengumpulan' => now()
         ]);
 
-        return redirect()->route('mahasiswa.riwayat')->with('success', 'Deklarasi AI berhasil dikirim dan telah diklasifikasi.');
+        $deklarasi->riwayatPrompt()->create([
+            'nama_platform_ai' => $request->nama_platform_ai,
+            'prompt_dikirim' => $request->prompt_dikirim,
+            'respons_ai' => $request->respons_ai,
+            'link_conversation' => $request->link_conversation,
+        ]);
+
+        return redirect()->route('mahasiswa.riwayat')->with('success', 'Deklarasi AI berhasil dikirim.');
     }
 
     /**
@@ -108,7 +103,7 @@ class DeklarasiController extends Controller
      */
     public function show($id)
     {
-        $deklarasi = Deklarasi::with(['tugas.tingkatAiasAkhir', 'tingkatAias'])
+        $deklarasi = Deklarasi::with(['tugas.tingkatAiasAkhir', 'tingkatAias', 'riwayatPrompt'])
             ->where('id', $id)
             ->where('mahasiswa_id', Auth::id())
             ->firstOrFail();

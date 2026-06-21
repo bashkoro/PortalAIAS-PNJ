@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Tugas;
 use App\Models\KelasKuliah;
+use App\Models\Deklarasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TaskController extends Controller
 {
@@ -71,7 +73,25 @@ class TaskController extends Controller
             ->orderBy('waktu_pengumpulan', 'desc')
             ->get();
 
-        return view('dosen.task_declarations', compact('tugas', 'deklarasi'));
+        return view('dosen.detailriwayat', compact('tugas', 'deklarasi'));
+    }
+
+    public function downloadPdf($id)
+    {
+        $deklarasi = Deklarasi::with([
+            'mahasiswa', 
+            'tugas.kelasKuliah.mataKuliah', 
+            'riwayatPrompt', 
+            'tingkatAias'
+        ])->findOrFail($id);
+
+        $pdf = Pdf::loadView('dosen.pdf_deklarasi', compact('deklarasi'));
+        $pdf->setPaper('A4', 'portrait');
+
+        $namaMahasiswa = str_replace(' ', '_', $deklarasi->mahasiswa->nama ?? 'Mahasiswa');
+        $fileName = 'Deklarasi_AIAS_' . $namaMahasiswa . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
     public function index()

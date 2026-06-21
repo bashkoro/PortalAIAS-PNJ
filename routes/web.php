@@ -94,6 +94,7 @@ Route::middleware('auth')->group(function () {
             
             // Riwayat Tugas
             Route::get('/riwayat', [TaskController::class, 'index'])->name('riwayat');
+            Route::get('/deklarasi/{id}/pdf', [TaskController::class, 'downloadPdf'])->name('deklarasi.pdf');
 
             // Old Task Routes (kept for compatibility)
             Route::get('/tugas/create', [TaskController::class, 'create'])->name('tugas.create');

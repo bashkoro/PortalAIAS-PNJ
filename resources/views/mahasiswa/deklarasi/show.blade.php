@@ -48,6 +48,40 @@
                     </dd>
                 </div>
 
+                <!-- Bagian Rincian Penggunaan AI -->
+                <div class="px-4 py-5 sm:px-6 border-t border-gray-200">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Rincian Penggunaan AI</h3>
+                </div>
+
+                <div class="py-4 sm:py-5 px-6">
+                    @if($deklarasi->riwayatPrompt && $deklarasi->riwayatPrompt->count() > 0)
+                        @foreach($deklarasi->riwayatPrompt as $index => $prompt)
+                            <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-4 mb-4">
+                                <h4 class="font-bold text-gray-800 mb-3 border-b pb-2">Platform AI: {{ $prompt->nama_platform_ai ?? '-' }}</h4>
+                                
+                                <div class="mb-3">
+                                    <span class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Prompt yang Dikirim</span>
+                                    <div class="text-sm text-gray-800 bg-gray-50 p-3 rounded border border-gray-100 whitespace-pre-wrap">{{ $prompt->prompt_dikirim ?? '-' }}</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <span class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Ringkasan Respons AI</span>
+                                    <div class="text-sm text-gray-800 bg-gray-50 p-3 rounded border border-gray-100 whitespace-pre-wrap">{{ $prompt->respons_ai ?? '-' }}</div>
+                                </div>
+
+                                @if($prompt->link_conversation)
+                                    <div>
+                                        <span class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Link Conversation</span>
+                                        <a href="{{ $prompt->link_conversation }}" target="_blank" class="text-sm text-blue-600 hover:text-blue-800 underline">{{ $prompt->link_conversation }}</a>
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    @else
+                        <p class="text-sm text-gray-500 italic">Tidak ada riwayat penggunaan prompt atau tools AI yang dideklarasikan.</p>
+                    @endif
+                </div>
+
                 <!-- Bagian 2: Bukti Unggahan -->
                 <div class="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 bg-gray-50">
                     <dt class="text-sm font-medium text-gray-500">Lampiran Bukti Prompt</dt>

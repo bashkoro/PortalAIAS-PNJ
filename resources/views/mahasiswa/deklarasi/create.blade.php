@@ -59,35 +59,12 @@
             @csrf
             <input type="hidden" name="tugas_id" value="{{ $tugas->id }}">
             
-            <!-- Part 1: Kondisi Penggunaan AI (AID Framework) -->
-            <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 border border-gray-200 overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shadow-md shadow-blue-100">1</div>
-                    <h3 class="font-bold text-gray-800">Aspek Penggunaan AI <span class="text-red-500">* (Wajib Diisi)</span></h3>
-                </div>
-                <div class="p-6">
-                    <p class="text-[11px] text-gray-500 mb-6 font-medium italic">Berdasarkan AID Framework, silakan centang aspek pengerjaan yang dibantu oleh AI:</p>
-                    
-                    <div class="space-y-3">
-                        @foreach($daftar_kondisi as $aspek => $keterangan)
-                            <label class="flex items-start p-4 rounded-xl border border-gray-100 bg-gray-50 hover:bg-emerald-50/50 hover:border-blue-200 transition-all cursor-pointer group">
-                                <div class="flex items-center h-5 mt-0.5">
-                                    <input type="checkbox" name="kondisi_penggunaan[]" value="{{ $aspek }}" class="h-5 w-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500 shadow-sm transition-all">
-                                </div>
-                                <div class="ml-4">
-                                    <span class="block text-sm font-black text-gray-800 group-hover:text-emerald-700 transition-colors uppercase tracking-tight">{{ $aspek }}</span>
-                                    <span class="block text-xs text-gray-500 font-medium mt-0.5">{{ $keterangan }}</span>
-                                </div>
-                            </label>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
 
-            <!-- Part 2: Rincian Deklarasi (Manual Inputs) -->
+
+            <!-- Part 1: Rincian Deklarasi (Manual Inputs) -->
             <div class="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-2xl border border-gray-100/80 border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-gray-300 text-white flex items-center justify-center text-[10px] font-bold shadow-sm">2</div>
+                    <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-bold shadow-sm">1</div>
                     <h3 class="font-bold text-gray-800">Rincian Deklarasi Penggunaan <span class="text-gray-400 text-xs font-normal italic ml-1">(Pendukung)</span></h3>
                 </div>
                 <div class="p-6 space-y-6">
@@ -136,7 +113,7 @@
                 </div>
             </div>
 
-            <!-- Part 3: Pakta Integritas -->
+            <!-- Part 2: Pakta Integritas -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 shadow-blue-50 shadow-inner">
                 <div class="flex items-start">
                     <div class="flex items-center h-5">

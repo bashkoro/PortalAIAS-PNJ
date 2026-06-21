@@ -69,7 +69,7 @@ class AdminController extends Controller
         $aturan = Aturan::with(['kondisiAturan', 'tingkatAias'])
             ->when($search, function ($query, $search) {
                 return $query->whereHas('kondisiAturan', function($q) use ($search) {
-                    $q->where('target_value', 'ilike', '%' . $search . '%');
+                    $q->where('target_value', 'like', '%' . $search . '%');
                 });
             })
             ->when($levelId, function ($query, $levelId) {
