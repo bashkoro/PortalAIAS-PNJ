@@ -32,9 +32,9 @@ class KelasController extends Controller
             ->whereNull('dosen_id')
             ->when($search, function ($query, $search) {
                 return $query->where(function($q) use ($search) {
-                    $q->where('nama_kelas', 'ilike', '%' . $search . '%')
+                    $q->where('nama_kelas', 'like', '%' . $search . '%')
                       ->orWhereHas('mataKuliah', function($mq) use ($search) {
-                          $mq->where('nama_mk', 'ilike', '%' . $search . '%');
+                          $mq->where('nama_mk', 'like', '%' . $search . '%');
                       });
                 });
             })
