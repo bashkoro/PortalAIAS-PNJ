@@ -2,9 +2,6 @@
 
 @section('title', 'Buat Penugasan Baru')
 
-@push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
-@endpush
 
 @section('content')
     <div class="max-w-4xl mx-auto">
@@ -111,23 +108,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <!-- Aktivitas Pembelajaran -->
-                    <div>
-                        <div class="flex items-center mb-2">
-                            <label class="block text-sm font-medium text-gray-700" for="aktivitas_pembelajaran">Aktivitas Pembelajaran <span class="text-red-500">*</span></label>
-                            <div class="relative group ml-2 flex items-center">
-                                <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Panduan Opsi:</p>
-                                    <p>Bentuk aktivitas spesifik ini akan menyesuaikan dengan Tingkat Proses Kognitif yang Anda pilih sebelumnya.</p>
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <select id="aktivitas_pembelajaran" name="aktivitas_pembelajaran" class="w-full bg-white border border-gray-300 text-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600" required>
-                            <option value="">Pilih Tingkat Kognitif Terlebih Dahulu</option>
-                        </select>
-                    </div>
+
                     <!-- Dimensi Pengetahuan -->
                     <div>
                         <div class="flex items-center mb-2">
@@ -271,84 +252,4 @@
     </div>
 @endsection
 
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const activityMapping = {
-                'Mengingat (Remembering)': [
-                    'Kuis Pilihan Ganda', 'Menjawab Singkat', 'Flashcards / Menghafal Istilah', 'Review Materi Bacaan'
-                ],
-                'Memahami (Understanding)': [
-                    'Penulisan Esai', 'Peta Konsep', 'Pembuatan Ringkasan', 'Infografis'
-                ],
-                'Mengaplikasikan (Applying)': [
-                    'Eksperimen Laboratorium', 'Laporan Praktikum', 'Tugas Pemecahan Masalah', 'Perhitungan Matematis', 'Presentasi'
-                ],
-                'Menganalisis (Analyzing)': [
-                    'Studi Kasus', 'Makalah Analisis', 'Penulisan Makalah Riset', 'Debat', 'Investigasi Kelompok'
-                ],
-                'Mengevaluasi (Evaluating)': [
-                    'Esai Argumentatif', 'Kritik Jurnal / Review Paper', 'Pembuatan Jurnal Refleksi', 'Laporan Evaluasi'
-                ],
-                'Mencipta (Creating)': [
-                    'Proyek Desain', 'Proposal Riset', 'Proyek Akhir / Penelitian', 'Pembuatan Solusi Alternatif'
-                ]
-            };
 
-            const aktivitasSelect = new TomSelect('#aktivitas_pembelajaran', {
-                create: false,
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                },
-                placeholder: 'Pilih Tingkat Kognitif Terlebih Dahulu',
-            });
-            
-            aktivitasSelect.disable();
-
-            const kognitifSelect = document.querySelector('.kognitif-select');
-            
-            function updateAktivitasDropdown(selectedValue, maintainOldValue = false) {
-                aktivitasSelect.clear();
-                aktivitasSelect.clearOptions();
-                
-                if (activityMapping[selectedValue]) {
-                    aktivitasSelect.enable();
-                    aktivitasSelect.settings.placeholder = 'Pilih Aktivitas Pembelajaran';
-                    aktivitasSelect.inputState();
-                    
-                    const options = activityMapping[selectedValue].map(activity => ({
-                        value: activity,
-                        text: activity
-                    }));
-                    
-                    aktivitasSelect.addOptions(options);
-
-                    // For validation errors reload, check if there was a previous selection
-                    if (maintainOldValue) {
-                        const oldAktivitas = "{{ old('aktivitas_pembelajaran') }}";
-                        if (oldAktivitas) {
-                            aktivitasSelect.setValue(oldAktivitas);
-                        }
-                    }
-                } else {
-                    aktivitasSelect.disable();
-                    aktivitasSelect.settings.placeholder = 'Pilih Tingkat Kognitif Terlebih Dahulu';
-                    aktivitasSelect.inputState();
-                }
-            }
-
-            if (kognitifSelect) {
-                kognitifSelect.addEventListener('change', (e) => {
-                    updateAktivitasDropdown(e.target.value);
-                });
-                
-                // Initial state based on old() values
-                if (kognitifSelect.value) {
-                    updateAktivitasDropdown(kognitifSelect.value, true);
-                }
-            }
-        });
-    </script>
-@endpush

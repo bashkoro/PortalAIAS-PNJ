@@ -140,7 +140,6 @@ class TugasController extends Controller
             'kelas_kuliah_id' => 'required|exists:kelas_kuliah,id',
             'judul' => 'required|string|max:100',
             'deskripsi' => 'required|string',
-            'aktivitas_pembelajaran' => 'required|string',
             'kriteria_tugas' => 'required|array',
             'action' => 'required|in:draft,publish'
         ]);
@@ -155,7 +154,6 @@ class TugasController extends Controller
         $tugas->kelas_kuliah_id = $request->kelas_kuliah_id;
         $tugas->judul = $request->judul;
         $tugas->deskripsi = $request->deskripsi;
-        $tugas->aktivitas_pembelajaran = $request->aktivitas_pembelajaran;
         $tugas->kriteria_tugas = $request->kriteria_tugas;
         $tugas->tingkat_aias_akhir_id = $scoreId;
 
