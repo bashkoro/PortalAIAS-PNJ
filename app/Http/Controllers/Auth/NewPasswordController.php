@@ -14,7 +14,7 @@ use Illuminate\Auth\Events\PasswordReset;
 class NewPasswordController extends Controller
 {
     /**
-     * Display the password reset view.
+     * Menampilkan halaman reset kata sandi.
      */
     public function create(Request $request)
     {
@@ -22,7 +22,7 @@ class NewPasswordController extends Controller
     }
 
     /**
-     * Handle an incoming new password request.
+     * Menangani permintaan kata sandi baru yang masuk.
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -34,9 +34,9 @@ class NewPasswordController extends Controller
             'password' => ['required', 'confirmed', PasswordRule::defaults()],
         ]);
 
-        // Here we will attempt to reset the user's password. If it is successful we
-        // will update the password on an actual user model and persist it to the
-        // database. Otherwise we will parse the error and return the response.
+        // Di sini kita akan mencoba mereset kata sandi pengguna. Jika berhasil, kita
+        // akan memperbarui kata sandi pada model pengguna dan menyimpannya ke
+        // database. Jika tidak, kita akan mengurai error dan mengembalikan respons.
         $status = Password::broker()->reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (Pengguna $user, string $password) {
@@ -48,9 +48,9 @@ class NewPasswordController extends Controller
             }
         );
 
-        // If the password was successfully reset, we will redirect the user back to
-        // the application's home authenticated view. If there is an error we can
-        // redirect them back to where they came from with their error message.
+        // Jika kata sandi berhasil direset, kita akan mengarahkan pengguna kembali ke
+        // halaman utama aplikasi. Jika terjadi error, kita dapat mengarahkan mereka
+        // kembali ke halaman sebelumnya beserta pesan error.
         if ($status == Password::PASSWORD_RESET) {
             return redirect()->route('login')->with('success', __($status));
         }

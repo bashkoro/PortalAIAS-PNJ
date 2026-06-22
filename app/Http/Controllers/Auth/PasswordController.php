@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules\Password;
 class PasswordController extends Controller
 {
     /**
-     * Show the change password form.
+     * Menampilkan form ubah kata sandi.
      */
     public function edit()
     {
@@ -18,7 +18,7 @@ class PasswordController extends Controller
     }
 
     /**
-     * Update the user's password.
+     * Memperbarui kata sandi pengguna.
      */
     public function update(Request $request)
     {

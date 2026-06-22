@@ -86,14 +86,14 @@
                             <div class="relative group ml-2 flex items-center">
                                 <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Tingkat Proses Kognitif:</p>
+                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Teori Dasar: Berbasis Taksonomi Bloom Revisi, yang mengklasifikasikan kerumitan proses berpikir. Di era AI, dikenal pula "Taksonomi Bloom Terbalik" di mana mahasiswa justru menggunakan AI untuk 'mencipta' di awal, lalu harus 'mengevaluasi' dan 'menganalisis' hasil AI tersebut.</p>
                                     <ul class="list-disc pl-4 space-y-1">
-                                        <li><strong>Mengingat:</strong> Mahasiswa hanya diminta mengingat fakta, teori, atau konsep dasar.</li>
-                                        <li><strong>Memahami:</strong> Mahasiswa diminta menjelaskan suatu konsep dengan kalimatnya sendiri.</li>
-                                        <li><strong>Mengaplikasikan:</strong> Mahasiswa menggunakan informasi atau rumus pada situasi studi kasus baru.</li>
-                                        <li><strong>Menganalisis:</strong> Mahasiswa memecah informasi kompleks untuk melihat pola atau hubungannya.</li>
-                                        <li><strong>Mengevaluasi:</strong> Mahasiswa memberikan penilaian, kritik, atau justifikasi berdasarkan standar tertentu.</li>
-                                        <li><strong>Mencipta:</strong> Mahasiswa merancang, membangun, atau menghasilkan produk/ide baru yang orisinal.</li>
+                                        <li><strong>Mengingat (Remember):</strong> Mahasiswa hanya diminta mengenali, memanggil, atau mengulang informasi, fakta, dan definisi dasar.</li>
+                                        <li><strong>Memahami (Understand):</strong> Mahasiswa diminta membangun makna, menginterpretasikan, mengklasifikasikan, atau merangkum informasi.</li>
+                                        <li><strong>Mengaplikasikan (Apply):</strong> Mahasiswa diminta menggunakan materi atau prosedur yang telah dipelajari ke dalam situasi nyata (misal: menggunakan rumus, melakukan wawancara).</li>
+                                        <li><strong>Menganalisis (Analyze):</strong> Mahasiswa diminta memecah informasi ke dalam bagian-bagian komponennya dan menentukan bagaimana bagian-bagian tersebut saling berhubungan.</li>
+                                        <li><strong>Mengevaluasi (Evaluate):</strong> Mahasiswa diminta membuat penilaian berdasarkan kriteria atau standar tertentu (melakukan kritik atau rekomendasi). (Sangat penting untuk mengkritisi output AI).</li>
+                                        <li><strong>Mencipta (Create):</strong> Mahasiswa diminta menyatukan elemen-elemen untuk membentuk suatu kesatuan baru yang koheren, orisinal, atau fungsional.</li>
                                     </ul>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                 </div>
@@ -103,7 +103,14 @@
                             <option value="">-- Pilih Tingkat Proses Kognitif --</option>
                             @foreach($kriteriaOptions['tingkat_proses_kognitif'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.tingkat_proses_kognitif') == $option ? 'selected' : '' }}>
-                                    {{ $option }}
+                                    @if($option == 'Mengingat') Mengingat (Remember)
+                                    @elseif($option == 'Memahami') Memahami (Understand)
+                                    @elseif($option == 'Mengaplikasikan') Mengaplikasikan (Apply)
+                                    @elseif($option == 'Menganalisis') Menganalisis (Analyze)
+                                    @elseif($option == 'Mengevaluasi') Mengevaluasi (Evaluate)
+                                    @elseif($option == 'Mencipta') Mencipta (Create)
+                                    @else {{ $option }}
+                                    @endif
                                 </option>
                             @endforeach
                         </select>
@@ -116,12 +123,12 @@
                             <div class="relative group ml-2 flex items-center">
                                 <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Dimensi Pengetahuan:</p>
+                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Teori Dasar: Merupakan klasifikasi jenis pengetahuan yang ingin diukur dari mahasiswa, masih berdasarkan kerangka Anderson & Krathwohl. Poin ini penting karena AI sangat pintar menguasai fakta dan konsep, namun tidak memiliki metakognisi layaknya manusia.</p>
                                     <ul class="list-disc pl-4 space-y-1">
-                                        <li><strong>Pengetahuan Faktual:</strong> Detail spesifik, istilah, atau elemen dasar yang harus dihafal.</li>
-                                        <li><strong>Pengetahuan Konseptual:</strong> Klasifikasi, teori, model, atau struktur antar gagasan.</li>
-                                        <li><strong>Pengetahuan Prosedural:</strong> Pengetahuan tentang metode, langkah-langkah, atau cara melakukan sesuatu.</li>
-                                        <li><strong>Pengetahuan Metakognitif:</strong> Kesadaran personal tentang bagaimana diri sendiri belajar, pemaknaan pengalaman pribadi, dan refleksi diri.</li>
+                                        <li><strong>Pengetahuan Faktual:</strong> Mengukur penguasaan elemen-elemen dasar (fakta, detail, terminologi spesifik) yang harus diketahui mahasiswa dalam suatu disiplin ilmu.</li>
+                                        <li><strong>Pengetahuan Konseptual:</strong> Mengukur pemahaman tentang teori, prinsip, model, dan bagaimana struktur tersebut saling berhubungan.</li>
+                                        <li><strong>Pengetahuan Prosedural:</strong> Mengukur penguasaan cara melakukan sesuatu, teknik, algoritma, atau metodologi spesifik.</li>
+                                        <li><strong>Pengetahuan Metakognitif:</strong> Mengukur kesadaran mahasiswa atas pemikirannya sendiri, refleksi strategis, dan kemampuan mengevaluasi keputusannya (seperti sadar kapan harus percaya AI dan kapan harus kritis terhadap AI).</li>
                                     </ul>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                 </div>
@@ -131,12 +138,7 @@
                             <option value="">-- Pilih Jenis Target Pengetahuan --</option>
                             @foreach($kriteriaOptions['dimensi_pengetahuan'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.dimensi_pengetahuan') == $option ? 'selected' : '' }}>
-                                    @if($option == 'Pengetahuan Faktual') Fakta & Data Spesifik
-                                    @elseif($option == 'Pengetahuan Konseptual') Teori & Model Konsep
-                                    @elseif($option == 'Pengetahuan Prosedural') Langkah Kerja & Praktik
-                                    @elseif($option == 'Pengetahuan Metakognitif') Refleksi Diri & Pengalaman
-                                    @else {{ $option }}
-                                    @endif
+                                    {{ $option }}
                                 </option>
                             @endforeach
                         </select>
@@ -148,13 +150,13 @@
                             <div class="relative group ml-2 flex items-center">
                                 <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Struktur Kompleksitas Respons:</p>
+                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Teori Dasar: Taksonomi SOLO (Structure of the Observed Learning Outcome) mengukur seberapa dalam dan seberapa kompleks susunan argumen atau jawaban mahasiswa. AI saat ini mampu merangkai hubungan, tapi kesulitan menggeneralisasi ide ke ranah yang sama sekali baru (Extended Abstract).</p>
                                     <ul class="list-disc pl-4 space-y-1">
-                                        <li><strong>Prastruktural:</strong> Jawaban tidak relevan, tidak terarah, atau salah.</li>
-                                        <li><strong>Unistruktural:</strong> Fokus pada satu aspek tunggal yang relevan.</li>
-                                        <li><strong>Multistruktural:</strong> Fokus pada beberapa aspek terpisah, belum ada hubungan.</li>
-                                        <li><strong>Relasional:</strong> Mengintegrasikan berbagai aspek menjadi sebuah kesatuan yang saling terhubung.</li>
-                                        <li><strong>Abstrak Diperluas:</strong> Mampu menggeneralisasi atau menerapkan prinsip ke dalam konteks baru.</li>
+                                        <li><strong>Prastruktural (Prestructural):</strong> Respons mahasiswa sangat dasar.</li>
+                                        <li><strong>Unistruktural (Unistructural):</strong> Respons mahasiswa hanya menangkap satu aspek dari konsep, sangat terbatas, dan tidak melihat gambaran besarnya.</li>
+                                        <li><strong>Multistruktural (Multistructural):</strong> Respons mahasiswa menyebutkan beberapa komponen atau aspek independen, tetapi belum mampu menghubungkannya menjadi satu kesatuan yang koheren.</li>
+                                        <li><strong>Relasional (Relational):</strong> Respons mahasiswa berhasil mengintegrasikan banyak elemen menjadi sebuah pola yang terstruktur dan bermakna (menunjukkan sebab-akibat atau relasi antar variabel).</li>
+                                        <li><strong>Abstrak Diperluas (Extended Abstract):</strong> Respons mahasiswa mampu melampaui informasi yang diberikan, mentransfer pemahaman ke domain masalah yang sama sekali baru, menyusun teori baru, atau menciptakan solusi yang belum pernah ada sebelumnya.</li>
                                     </ul>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                 </div>
@@ -164,11 +166,11 @@
                             <option value="">-- Pilih Kompleksitas Jawaban --</option>
                             @foreach($kriteriaOptions['struktur_kompleksitas_respons'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.struktur_kompleksitas_respons') == $option ? 'selected' : '' }}>
-                                    @if($option == 'Prastruktural') Sangat Dasar
-                                    @elseif($option == 'Unistruktural') Fokus Satu Aspek
-                                    @elseif($option == 'Multistruktural') Pemaparan Banyak Fakta
-                                    @elseif($option == 'Relasional') Analisis Keterkaitan Konsep
-                                    @elseif($option == 'Abstrak Diperluas') Pengembangan Konsep Baru
+                                    @if($option == 'Prastruktural') Prastruktural (Prestructural)
+                                    @elseif($option == 'Unistruktural') Unistruktural (Unistructural)
+                                    @elseif($option == 'Multistruktural') Multistruktural (Multistructural)
+                                    @elseif($option == 'Relasional') Relasional (Relational)
+                                    @elseif($option == 'Abstrak Diperluas') Abstrak Diperluas (Extended Abstract)
                                     @else {{ $option }}
                                     @endif
                                 </option>
@@ -182,11 +184,11 @@
                             <div class="relative group ml-2 flex items-center">
                                 <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Keterangan:</p>
+                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Teori Dasar: Mengukur seberapa dekat relevansi tugas dengan kondisi profesional di dunia nyata. Ini adalah penangkal AI yang paling kuat karena AI kesulitan menghadapi konteks nyata yang dinamis, beretika, dan spesifik-lokal.</p>
                                     <ul class="list-disc pl-4 space-y-1">
-                                        <li><strong>Teori Murni / Konseptual:</strong> Tugas bersifat teoritis abstrak, akademis murni, dan tidak terikat pada situasi dunia nyata.</li>
-                                        <li><strong>Simulasi / Studi Kasus Buatan:</strong> Tugas menggunakan skenario pura-pura yang meniru kondisi lingkungan kerja.</li>
-                                        <li><strong>Proyek Lapangan / Industri Nyata:</strong> Tugas mewajibkan mahasiswa turun lapangan, mencari data primer, atau memecahkan krisis nyata dari pemangku kepentingan industri.</li>
+                                        <li><strong>Dekontekstualisasi / Tradisional:</strong> Tugas yang kaku, sempit, dan terlepas dari praktik dunia nyata (misal: esai teoretis umum). (Sangat mudah diotomatisasi penuh oleh AI).</li>
+                                        <li><strong>Simulasi / Terapan:</strong> Tugas yang meminta mahasiswa menyimulasikan proses, aktivitas, atau standar kinerja dari dunia kerja ke dalam skenario kelas.</li>
+                                        <li><strong>Otentik / Dunia Nyata:</strong> Tugas yang sepenuhnya merefleksikan realitas kehidupan profesional, melibatkan dinamika global, multidisipliner, interaksi dengan manusia asli (klien/masyarakat), dan etika.</li>
                                     </ul>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                 </div>
@@ -196,11 +198,7 @@
                             <option value="">-- Pilih Konteks & Skenario --</option>
                             @foreach($kriteriaOptions['tingkat_keaslian_konteks'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.tingkat_keaslian_konteks') == $option ? 'selected' : '' }}>
-                                    @if($option == 'Dekontekstualisasi / Tradisional') Teori Murni / Konseptual
-                                    @elseif($option == 'Simulasi / Terapan') Simulasi / Studi Kasus Buatan
-                                    @elseif($option == 'Otentik / Dunia Nyata') Proyek Lapangan / Industri Nyata
-                                    @else {{ $option }}
-                                    @endif
+                                    {{ $option }}
                                 </option>
                             @endforeach
                         </select>
@@ -212,11 +210,11 @@
                             <div class="relative group ml-2 flex items-center">
                                 <i class="fas fa-question-circle text-gray-400 hover:text-emerald-600 cursor-help transition-colors"></i>
                                 <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-72 p-3 bg-gray-800 text-white text-xs rounded-lg shadow-xl z-50 transition-opacity">
-                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Fokus Penilaian:</p>
+                                    <p class="font-semibold mb-1 border-b border-gray-600 pb-1">Teori Dasar: Pergeseran paradigma evaluasi karena AI. Dosen tidak bisa lagi hanya menilai "hasil akhirnya saja" (karena hasil akhir bisa diketik oleh ChatGPT), melainkan harus menilai proses belajarnya dan mengujinya secara langsung.</p>
                                     <ul class="list-disc pl-4 space-y-1">
-                                        <li><strong>Penilaian Hasil Akhir:</strong> Nilai murni dari dokumen atau karya yang dikumpulkan (contoh: laporan akhir, kode jadi, atau esai).</li>
-                                        <li><strong>Penilaian Proses Pengerjaan:</strong> Nilai mencakup pemantauan langkah pembuatan (contoh: logbook, draf, riwayat revisi, atau riwayat prompt AI).</li>
-                                        <li><strong>Penilaian Lisan / Presentasi:</strong> Penilaian dilakukan lewat interaksi langsung (contoh: presentasi kelas, tanya jawab, atau sidang).</li>
+                                        <li><strong>Asesmen Produk:</strong> Dosen hanya menilai berdasarkan produk/hasil akhir yang dikumpulkan mahasiswa (esai, laporan, desain, program akhir) tanpa melihat bagaimana ia dibuat.</li>
+                                        <li><strong>Asesmen Proses:</strong> Dosen mengevaluasi perjalanan pembuatan tugas tersebut (menilai draf, log prompt AI yang dipakai mahasiswa, iterasi desain, revisi, dan jurnal reflektif).</li>
+                                        <li><strong>Asesmen Dialogis:</strong> Dosen mengevaluasi kemampuan bernalar mahasiswa secara real-time dan interaktif (melalui pembelaan lisan, presentasi tanya jawab, atau viva voces) untuk memastikan orisinalitas pemikiran mahasiswa.</li>
                                     </ul>
                                     <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800"></div>
                                 </div>
@@ -226,11 +224,7 @@
                             <option value="">-- Pilih Fokus Penilaian --</option>
                             @foreach($kriteriaOptions['fokus_evaluasi'] as $option)
                                 <option value="{{ $option }}" {{ old('kriteria_tugas.fokus_evaluasi') == $option ? 'selected' : '' }}>
-                                    @if($option == 'Asesmen Produk') Penilaian Hasil Akhir
-                                    @elseif($option == 'Asesmen Proses') Penilaian Proses Pengerjaan
-                                    @elseif($option == 'Asesmen Dialogis') Penilaian Lisan / Presentasi
-                                    @else {{ $option }}
-                                    @endif
+                                    {{ $option }}
                                 </option>
                             @endforeach
                         </select>
