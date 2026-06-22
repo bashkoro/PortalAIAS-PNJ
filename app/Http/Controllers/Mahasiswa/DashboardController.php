@@ -9,13 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     /**
-     * Display the Mahasiswa Dashboard.
+     * Menampilkan Dashboard Mahasiswa.
      */
     public function index()
     {
         $user = Auth::user();
         
-        // Fetch classes this mahasiswa is enrolled in
+        // Mengambil kelas yang diikuti oleh mahasiswa ini
         $kelasEnrolled = $user->kelasKuliah()->with(['mataKuliah', 'dosen', 'periodeAkademik'])->get();
 
         $totalKelas = $kelasEnrolled->count();

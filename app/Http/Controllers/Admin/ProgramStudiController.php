@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProgramStudiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan daftar sumber daya.
      */
     public function index(Request $request)
     {
@@ -29,7 +29,7 @@ class ProgramStudiController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan form untuk membuat sumber daya baru.
      */
     public function create()
     {
@@ -37,7 +37,7 @@ class ProgramStudiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan sumber daya yang baru dibuat.
      */
     public function store(Request $request)
     {
@@ -52,7 +52,7 @@ class ProgramStudiController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form untuk mengedit sumber daya yang dipilih.
      */
     public function edit(ProgramStudi $programStudi)
     {
@@ -60,7 +60,7 @@ class ProgramStudiController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui sumber daya yang dipilih.
      */
     public function update(Request $request, ProgramStudi $programStudi)
     {
@@ -75,11 +75,11 @@ class ProgramStudiController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus sumber daya yang dipilih dari penyimpanan.
      */
     public function destroy(ProgramStudi $programStudi)
     {
-        // Add a check to prevent deletion if there are related models (e.g., Pengguna, MataKuliah)
+        // Tambahkan pengecekan untuk mencegah penghapusan jika ada model terkait (misalnya Pengguna, MataKuliah)
         if ($programStudi->pengguna()->exists() || $programStudi->mataKuliah()->exists()) {
             return redirect()->route('admin.program-studi.index')->with('error', 'Tidak dapat menghapus Program Studi karena masih digunakan oleh entitas lain.');
         }

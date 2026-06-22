@@ -11,17 +11,12 @@ use Illuminate\Support\Str;
 
 class DosenPnjSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     * Note: This seeder expects a CSV file. If your file is a real .xlsx, 
-     * please export it to CSV (comma separated) before running.
-     */
+    
     public function run(): void
     {
+        // Kudu csv ya adik adik
         $filePath = database_path('data/Data Dosen PNJ.csv');
         
-        // Even if named .xlsx, we'll try to read it as CSV if possible, 
-        // but typically this will fail for real Excel files.
         if (!file_exists($filePath)) {
             $this->command->error("File not found: {$filePath}");
             return;
@@ -39,14 +34,14 @@ class DosenPnjSeeder extends Seeder
             return;
         }
 
-        // Cache password hash to avoid running Hash::make in the loop, which is very slow
+        // Default pass
         $defaultPassword = Hash::make('dosen1234');
         
         $count = 0;
         $row = 0;
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
             $row++;
-            // Skip the first row "SISTER..." and the header row "NO.,NIDN..."
+            // Skip baris pertama
             if ($row <= 2) {
                 continue;
             }
@@ -59,7 +54,7 @@ class DosenPnjSeeder extends Seeder
 
             if (empty(trim($rawName))) continue;
 
-            // 1. Name Cleaning
+            // 1. Manggil fungsi cleaname
             $cleanName = $this->cleanName($rawName);
             
             // 2. Email Prefix
@@ -73,7 +68,7 @@ class DosenPnjSeeder extends Seeder
             $domain = $this->getDomain($prodiName);
             $email = $emailPrefix . $domain;
 
-            // 4. Find Program Studi ID
+            // 4. Nyari id prodi
             $programStudi = ProgramStudi::where('nama_prodi', 'LIKE', "%{$prodiName}%")
                 ->orWhere('nama_prodi', $prodiName)
                 ->first();
@@ -82,7 +77,7 @@ class DosenPnjSeeder extends Seeder
                 $programStudi = ProgramStudi::first(); 
             }
 
-            // 5. Insertion
+            // 5. Masukkk
             if (!Pengguna::where('email', $email)->exists()) {
                 Pengguna::create([
                     'nama' => $rawName, // Original name for display
@@ -101,11 +96,11 @@ class DosenPnjSeeder extends Seeder
 
     private function cleanName(string $name): string
     {
-        // Strip titles after the comma
+        // Ngilangin gelar
         $parts = explode(',', $name);
         $name = trim($parts[0]);
 
-        // Strip common prefixes repeatedly
+        // Ngilangin gelar depan
         $prefixes = ['Dr. ', 'Dra. ', 'Drs. ', 'Ir. ', 'Prof. '];
         $changed = true;
         while ($changed) {
@@ -121,6 +116,7 @@ class DosenPnjSeeder extends Seeder
         return trim($name);
     }
 
+    // Buat emeil
     private function getDomain(string $prodi): string
     {
         if (Str::contains($prodi, ['Administrasi', 'Konvensi', 'Komunikasi Bisnis'])) {

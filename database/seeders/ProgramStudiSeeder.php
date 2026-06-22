@@ -67,12 +67,12 @@ class ProgramStudiSeeder extends Seeder
     }
 
     /**
-     * Helper function to generate an acronym.
-     * E.g., 'Administrasi Bisnis D3' -> 'AB-D3'
+     * Fungsi helper untuk menghasilkan akronim.
+     * Contoh: 'Administrasi Bisnis D3' -> 'AB-D3'
      */
     private function generateAcronym(string $string): string
     {
-        // Special case handling for RESD
+        // Penanganan kasus khusus untuk RESD
         if (str_contains($string, '(RESD)')) {
             return 'RESD';
         }
@@ -82,18 +82,18 @@ class ProgramStudiSeeder extends Seeder
         $degree = '';
 
         foreach ($words as $word) {
-            // Check if the word is a degree indicator (D1, D3, D4, S2)
+            // Periksa apakah kata tersebut adalah indikator gelar (D1, D3, D4, S2)
             if (preg_match('/^(D[134]|S2)$/', $word)) {
                 $degree = '-' . $word;
                 continue;
             }
 
-            // Ignore common conjunctions/prepositions
+            // Abaikan konjungsi/preposisi umum
             if (in_array(strtolower($word), ['dan', 'untuk', 'atau'])) {
                 continue;
             }
 
-            // Take the first letter of other words
+            // Ambil huruf pertama dari kata lainnya
             if (!empty($word)) {
                 $acronym .= strtoupper(substr($word, 0, 1));
             }

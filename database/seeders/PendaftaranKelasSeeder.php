@@ -37,8 +37,8 @@ class PendaftaranKelasSeeder extends Seeder
                 continue;
             }
 
-            // Find all classes that belong to the student's program studi
-            // by joining kelas_kuliah with mata_kuliah
+            // Cari semua kelas yang termasuk dalam program studi mahasiswa
+            // dengan menggabungkan kelas_kuliah dan mata_kuliah
             $availableClasses = DB::table('kelas_kuliah')
                 ->join('mata_kuliah', 'kelas_kuliah.mata_kuliah_id', '=', 'mata_kuliah.id')
                 ->where('mata_kuliah.program_studi_id', $prodiId)
@@ -50,7 +50,7 @@ class PendaftaranKelasSeeder extends Seeder
                 continue;
             }
 
-            // Shuffle and pick up to 3 classes
+            // Acak dan pilih hingga 3 kelas
             shuffle($availableClasses);
             $classesToEnroll = array_slice($availableClasses, 0, min(3, count($availableClasses)));
 

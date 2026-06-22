@@ -32,8 +32,8 @@ class TaskController extends Controller
             $levelCounts = $tugasTerpublikasi->groupBy('tingkat_aias_akhir_id')->map->count();
             $mostFrequentLevelId = $levelCounts->sortDesc()->keys()->first();
             
-            // Get the name of the level based on ID from the loaded relation to avoid extra queries if possible, 
-            // but for safety we find the first task with this ID.
+            // Mendapatkan nama level berdasarkan ID dari relasi yang dimuat untuk menghindari query tambahan jika memungkinkan, 
+            // namun untuk keamanan, kita mencari tugas pertama dengan ID ini.
             $sampleTask = $tugasTerpublikasi->firstWhere('tingkat_aias_akhir_id', $mostFrequentLevelId);
             if ($sampleTask && $sampleTask->tingkatAiasAkhir) {
                 $trenKebijakanAI = $sampleTask->tingkatAiasAkhir->nama_tingkat;
@@ -114,7 +114,7 @@ class TaskController extends Controller
             ->where('dosen_id', $dosenId)
             ->get();
 
-        // Hardcoded criteria options based on AturanSeeder
+        // Opsi kriteria hardcode berdasarkan AturanSeeder
         $kriteriaOptions = [
             'lingkungan_pengerjaan' => ['Terbuka / Tanpa Pengawasan', 'Terkendali Penuh / Terawasi'],
             'tingkat_proses_kognitif' => ['Mengingat (Remembering)', 'Memahami (Understanding)', 'Mengaplikasikan (Applying)', 'Menganalisis (Analyzing)', 'Mengevaluasi (Evaluating)', 'Mencipta (Creating)'],

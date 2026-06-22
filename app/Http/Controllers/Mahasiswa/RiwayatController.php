@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class RiwayatController extends Controller
 {
     /**
-     * Display a listing of declarations history.
+     * Menampilkan daftar riwayat deklarasi.
      */
     public function index()
     {

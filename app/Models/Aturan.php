@@ -39,7 +39,7 @@ class Aturan extends Model
 
     public function checkConflict(array $rules): bool
     {
-        // Logic to check if new rules conflict with existing active rules
+        // Logika untuk memeriksa apakah aturan baru bertentangan dengan aturan aktif yang ada
         $activeRules = self::getActiveRules();
 
         foreach ($activeRules as $activeRule) {
@@ -52,7 +52,7 @@ class Aturan extends Model
             })->sort()->values()->toArray();
 
             if ($existingConditions === $newConditions) {
-                return true; // Conflict found
+                return true; // Ditemukan konflik
             }
         }
 
@@ -61,7 +61,7 @@ class Aturan extends Model
 
     public function saveRule(array $data): bool
     {
-        // Example simple implementation, assuming $data contains rule info and conditions
+        // Contoh implementasi sederhana, asumsikan $data berisi info aturan dan kondisi
         DB::beginTransaction();
         try {
             $this->tingkat_aias_id = $data['tingkat_aias_id'];
@@ -69,7 +69,7 @@ class Aturan extends Model
             $this->save();
 
             if (isset($data['kondisi']) && is_array($data['kondisi'])) {
-                $this->kondisiAturan()->delete(); // Clear existing conditions if any
+                $this->kondisiAturan()->delete(); // Hapus kondisi yang ada jika ada
                 foreach ($data['kondisi'] as $kondisi) {
                     $this->kondisiAturan()->create($kondisi);
                 }

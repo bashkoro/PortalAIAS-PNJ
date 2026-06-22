@@ -42,20 +42,20 @@ class Tugas extends Model
                 $paramName = $kondisi->nama_parameter;
                 $targetValue = $kondisi->target_value;
 
-                // Check if the input criteria has the parameter and matches the target value
+                // Periksa apakah kriteria input memiliki parameter dan cocok dengan nilai target
                 if (!isset($kriteria[$paramName]) || $kriteria[$paramName] !== $targetValue) {
                     $isMatch = false;
-                    break; // Move to the next rule
+                    break; // Pindah ke aturan berikutnya
                 }
             }
 
             if ($isMatch) {
-                // If all conditions for a rule match, return its tingkat_aias_id
+                // Jika semua kondisi untuk sebuah aturan terpenuhi, kembalikan tingkat_aias_id nya
                 return $rule->tingkat_aias_id;
             }
         }
 
-        // No matching rule found
+        // Tidak ada aturan yang cocok ditemukan
         return null;
     }
 

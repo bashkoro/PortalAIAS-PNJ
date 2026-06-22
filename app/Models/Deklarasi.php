@@ -39,7 +39,7 @@ class Deklarasi extends Model
 
     public function validateInput(array $request): bool
     {
-        // Add basic validation logic as an example
+        // Tambahkan logika validasi dasar sebagai contoh
         if (!isset($request['pernyataan_disetujui']) || !$request['pernyataan_disetujui']) {
             return false;
         }

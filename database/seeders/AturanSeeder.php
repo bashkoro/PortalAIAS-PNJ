@@ -9,14 +9,14 @@ class AturanSeeder extends Seeder
 {
     public function run(): void
     {
-        // Use CASCADE for PostgreSQL truncation
+        // Gunakan CASCADE untuk truncation PostgreSQL
         Schema::disableForeignKeyConstraints();
         DB::table('kondisi_aturan')->truncate();
         DB::table('aturan')->truncate();
         Schema::enableForeignKeyConstraints();
 
         $lingkungan = ['Terbuka / Tanpa Pengawasan', 'Terkendali Penuh / Terawasi'];
-        // Use the exact strings expected by the UI
+        // Gunakan string persis yang diharapkan oleh UI
         $kognitif = ['Mengingat (Remembering)', 'Memahami (Understanding)', 'Mengaplikasikan (Applying)', 'Menganalisis (Analyzing)', 'Mengevaluasi (Evaluating)', 'Mencipta (Creating)'];
         $pengetahuan = ['Pengetahuan Faktual', 'Pengetahuan Konseptual', 'Pengetahuan Prosedural', 'Pengetahuan Metakognitif'];
         $kompleksitas = ['Prastruktural', 'Unistruktural', 'Multistruktural', 'Relasional', 'Abstrak Diperluas (Extended Abstract)'];
@@ -27,7 +27,7 @@ class AturanSeeder extends Seeder
         $kondisiInserts = [];
         $ruleCount = 1;
 
-        // Weights for vulnerability score in open environments
+        // Bobot
         $vulnWeights = [
             'kognitif' => [
                 'Mengingat (Remembering)' => 5,
@@ -72,7 +72,7 @@ class AturanSeeder extends Seeder
                             foreach ($konteks as $kon) {
                                 foreach ($evaluasi as $ev) {
                                     
-                                    // Logic Scoring Algorithm
+                                    // Logika Algoritma Scoring
                                     $level = 1;
                                     
                                     if ($l === 'Terkendali Penuh / Terawasi') {
@@ -82,22 +82,22 @@ class AturanSeeder extends Seeder
                                             $level = 1;
                                         }
                                     } else {
-                                        // Open env: vulnerable to AI
+                                        // Lingkungan Terbuka: rentan terhadap penggunaan AI
                                         $score = $vulnWeights['kognitif'][$kog] 
                                                + $vulnWeights['pengetahuan'][$pen] 
                                                + $vulnWeights['kompleksitas'][$kom] 
                                                + $vulnWeights['konteks'][$kon] 
                                                + $vulnWeights['evaluasi'][$ev];
                                         
-                                        // Max score 5+3+4+2+2 = 16
+                                        // Skor maksimal 5+3+4+2+2 = 16
                                         if ($score >= 12) {
-                                            $level = 5; // Very vulnerable, must assume full AI use
+                                            $level = 5; 
                                         } elseif ($score >= 8) {
                                             $level = 4;
                                         } elseif ($score >= 4) {
                                             $level = 3;
                                         } else {
-                                            $level = 2; // Highly secure format (authentic, process-driven, creating)
+                                            $level = 2; 
                                         }
                                     }
 
@@ -130,7 +130,7 @@ class AturanSeeder extends Seeder
                 }
             }
 
-            // Insert remaining
+            // Masukkan sisanya
             if (count($aturanInserts) > 0) {
                 DB::table('aturan')->insert($aturanInserts);
                 DB::table('kondisi_aturan')->insert($kondisiInserts);

@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules\Password;
 class ProfileController extends Controller
 {
     /**
-     * Show the profile edit form.
+     * Menampilkan form edit profil.
      */
     public function edit()
     {
@@ -20,7 +20,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Memperbarui informasi profil pengguna.
      */
     public function update(Request $request)
     {
@@ -40,7 +40,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's password.
+     * Memperbarui kata sandi pengguna.
      */
     public function updatePassword(Request $request)
     {

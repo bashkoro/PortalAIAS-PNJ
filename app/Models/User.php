@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
 
     /**
-     * Get the attributes that should be cast.
+     * Mendapatkan atribut yang harus di-cast.
      *
      * @return array<string, string>
      */

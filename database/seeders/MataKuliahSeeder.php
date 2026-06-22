@@ -30,26 +30,26 @@ class MataKuliahSeeder extends Seeder
             $prodiName = $course['Program_Studi'];
             $mkName = $course['Mata_Kuliah_Clean'];
 
-            // Skip if essential data is missing
+            // Lewati jika data esensial hilang
             if (empty($prodiName) || empty($mkName)) {
                 continue;
             }
 
-            // Find ProgramStudi ID
+            // Mencari ID ProgramStudi
             $prodi = DB::table('program_studi')
                 ->where('nama_prodi', $prodiName)
                 ->first();
 
             if (!$prodi) {
-                continue; // Skip if ProgramStudi not found
+                continue; // Lewati jika ProgramStudi tidak ditemukan
             }
 
-            // Generate a simple dummy code (e.g., first letters + random number)
+            // Membuat kode dummy sederhana (misal: huruf pertama + angka acak)
             $words = explode(' ', $mkName);
             $acronym = '';
             foreach ($words as $word) {
                 if (!empty($word)) {
-                    // Only take alphanumeric characters for the acronym
+                    // Hanya ambil karakter alfanumerik untuk akronim
                     $cleanWord = preg_replace('/[^a-zA-Z0-9]/', '', $word);
                     if (!empty($cleanWord)) {
                         $acronym .= strtoupper(substr($cleanWord, 0, 1));
@@ -60,15 +60,15 @@ class MataKuliahSeeder extends Seeder
             $baseCode = $prodi->kode_prodi . '-' . $acronym;
             $randomNumber = rand(100, 999);
             
-            // The column limit is 20 chars. We need 4 chars for "-999".
-            // So the base code can be at most 16 chars.
+            // Batas kolom adalah 20 karakter. Kita butuh 4 karakter untuk "-999".
+            // Jadi kode dasar maksimal 16 karakter.
             if (strlen($baseCode) > 16) {
                 $baseCode = substr($baseCode, 0, 16);
             }
             
             $kodeMk = $baseCode . '-' . $randomNumber;
 
-            // Insert using DB facade to emulate firstOrCreate behavior without models
+            // Masukkan menggunakan DB facade untuk meniru perilaku firstOrCreate tanpa model
             $exists = DB::table('mata_kuliah')
                 ->where('program_studi_id', $prodi->id)
                 ->where('nama_mk', $mkName)

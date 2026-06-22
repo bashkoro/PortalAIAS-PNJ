@@ -61,7 +61,7 @@ class DeclarationController extends Controller
                 throw new \Exception('Gagal menyimpan deklarasi utama.');
             }
 
-            // Save prompt history if provided
+            // Menyimpan riwayat prompt jika diberikan
             if ($request->filled('prompt_dikirim') || $request->filled('respons_ai') || $request->filled('nama_platform_ai')) {
                 $riwayat = new RiwayatPrompt();
                 $riwayat->deklarasi_id = $deklarasi->id;

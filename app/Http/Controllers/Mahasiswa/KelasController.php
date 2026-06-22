@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class KelasController extends Controller
 {
     /**
-     * Display available classes for enrollment.
+     * Menampilkan kelas yang tersedia untuk pendaftaran.
      */
     public function available(Request $request)
     {
@@ -27,7 +27,7 @@ class KelasController extends Controller
         $search = $request->query('search');
         $prodiId = $request->query('program_studi_id');
 
-        // Fetch classes in active period that have a dosen, and the student is NOT enrolled in
+        // Mengambil kelas pada periode aktif yang memiliki dosen, dan mahasiswa BELUM terdaftar di dalamnya
         $kelasTersedia = KelasKuliah::with(['mataKuliah.programStudi', 'dosen'])
             ->where('periode_akademik_id', $activePeriode->id)
             ->whereNotNull('dosen_id')
@@ -57,7 +57,7 @@ class KelasController extends Controller
     }
 
     /**
-     * Enroll in a class.
+     * Mendaftar ke sebuah kelas.
      */
     public function enroll(Request $request)
     {
@@ -68,12 +68,12 @@ class KelasController extends Controller
         $user = Auth::user();
         $kelasId = $request->kelas_kuliah_id;
 
-        // Check if already enrolled
+        // Memeriksa apakah sudah terdaftar
         if ($user->kelasKuliah()->where('kelas_kuliah.id', $kelasId)->exists()) {
             return back()->with('error', 'Anda sudah terdaftar di kelas ini.');
         }
 
-        // Attach student to class (pivot table: pendaftaran_kelas)
+        // Menghubungkan mahasiswa ke kelas (tabel pivot: pendaftaran_kelas)
         $user->kelasKuliah()->attach($kelasId);
 
         $kelas = KelasKuliah::find($kelasId);
@@ -81,27 +81,27 @@ class KelasController extends Controller
     }
 
     /**
-     * Display specific classroom for Mahasiswa.
+     * Menampilkan ruang kelas spesifik untuk Mahasiswa.
      */
     public function show(KelasKuliah $kelas)
     {
         $user = Auth::user();
 
-        // Security check: Ensure student is enrolled
+        // Pemeriksaan keamanan: Pastikan mahasiswa terdaftar
         if (!$user->kelasKuliah()->where('kelas_kuliah.id', $kelas->id)->exists()) {
             abort(403, 'Anda tidak terdaftar di ruang kelas ini.');
         }
 
         $kelas->load(['mataKuliah.programStudi', 'dosen', 'periodeAkademik']);
 
-        // Fetch all published tasks for this class
+        // Mengambil semua tugas yang dipublikasikan untuk kelas ini
         $tugas = Tugas::with('tingkatAiasAkhir')
             ->where('kelas_kuliah_id', $kelas->id)
             ->where('status_publikasi', 'Published')
             ->orderBy('id', 'desc')
             ->get();
 
-        // Get IDs of tasks the student has already declared
+        // Mendapatkan ID tugas yang sudah dideklarasikan oleh mahasiswa
         $declared_tugas_ids = \App\Models\Deklarasi::where('mahasiswa_id', $user->id)
             ->pluck('tugas_id')
             ->toArray();

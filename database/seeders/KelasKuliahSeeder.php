@@ -13,14 +13,14 @@ class KelasKuliahSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Setup Active Period
+        // 1. Setup Periode Aktif
         $periode = DB::table('periode_akademik')->where('is_active', true)->first();
         if (!$periode) {
             $this->command->error("No active Periode Akademik found.");
             return;
         }
 
-        // --- STEP A: Specific Testing Class ---
+        // --- LANGKAH A: Kelas Testing Spesifik ---
         
         $dosenTester = DB::table('pengguna')->where('nama', 'Dosen Tester')->first();
         if (!$dosenTester) {
@@ -30,14 +30,14 @@ class KelasKuliahSeeder extends Seeder
 
         $prodi = DB::table('program_studi')->first();
         
-        // Fetch or create Matakuliah Testing
+        // Mengambil atau membuat Matakuliah Testing
         $mkTestingId = DB::table('mata_kuliah')->updateOrInsert(
             ['nama_mk' => 'Matakuliah Testing', 'program_studi_id' => $prodi->id],
             ['kode_mk' => 'TEST-001']
         );
         $mkTesting = DB::table('mata_kuliah')->where('nama_mk', 'Matakuliah Testing')->first();
 
-        // Create Kelas Testing assigned to Dosen Tester
+        // Membuat Kelas Testing yang ditugaskan ke Dosen Tester
         DB::table('kelas_kuliah')->updateOrInsert(
             [
                 'nama_kelas' => 'Kelas Testing', 
@@ -47,7 +47,7 @@ class KelasKuliahSeeder extends Seeder
             ['dosen_id' => $dosenTester->id]
         );
 
-        // --- STEP B: JSON Scraped Classes (Unassigned) ---
+        // --- LANGKAH B: Kelas Hasil Scrape JSON (Belum Ditugaskan) ---
 
         $jsonPath = database_path('data/courses_cleaned.json');
         if (!File::exists($jsonPath)) {
@@ -76,7 +76,7 @@ class KelasKuliahSeeder extends Seeder
 
             if (!$mataKuliah) continue;
 
-            // Insert as NULL (unassigned)
+            // Masukkan sebagai NULL (belum ditugaskan)
             $exists = DB::table('kelas_kuliah')
                 ->where('mata_kuliah_id', $mataKuliah->id)
                 ->where('nama_kelas', $kelasName)
@@ -87,7 +87,7 @@ class KelasKuliahSeeder extends Seeder
                 DB::table('kelas_kuliah')->insert([
                     'mata_kuliah_id' => $mataKuliah->id,
                     'nama_kelas' => $kelasName,
-                    'dosen_id' => null, // Explicitly set to NULL
+                    'dosen_id' => null, // Atur secara eksplisit ke NULL
                     'periode_akademik_id' => $periode->id,
                 ]);
                 $insertedCount++;

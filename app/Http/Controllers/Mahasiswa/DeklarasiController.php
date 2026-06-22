@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class DeklarasiController extends Controller
 {
     /**
-     * Show the form for creating a new declaration.
+     * Menampilkan formulir untuk membuat deklarasi baru.
      */
     public function create(Request $request)
     {
@@ -23,14 +23,14 @@ class DeklarasiController extends Controller
             return redirect()->route('mahasiswa.dashboard')->with('error', 'Pilih tugas terlebih dahulu.');
         }
 
-        // Fetch task and ensure student is enrolled in the class
+        // Mengambil tugas dan memastikan mahasiswa terdaftar di kelas tersebut
         $tugas = Tugas::with(['kelasKuliah.mataKuliah', 'tingkatAiasAkhir'])
             ->whereHas('kelasKuliah.pendaftaranKelas', function($query) use ($user) {
                 $query->where('mahasiswa_id', $user->id);
             })
             ->findOrFail($tugasId);
 
-        // Check if already declared
+        // Memeriksa apakah sudah melakukan deklarasi
         $existing = Deklarasi::where('tugas_id', $tugasId)
             ->where('mahasiswa_id', $user->id)
             ->first();
@@ -43,7 +43,7 @@ class DeklarasiController extends Controller
     }
 
     /**
-     * Store a newly created declaration in storage.
+     * Menyimpan deklarasi yang baru dibuat ke dalam penyimpanan.
      */
     public function store(Request $request)
     {
@@ -65,7 +65,7 @@ class DeklarasiController extends Controller
         $user = Auth::user();
         $tugas = Tugas::findOrFail($request->tugas_id);
 
-        // Security check
+        // Pemeriksaan keamanan
         $isEnrolled = $user->kelasKuliah()->where('kelas_kuliah.id', $tugas->kelas_kuliah_id)->exists();
         if (!$isEnrolled) {
             abort(403, 'Anda tidak terdaftar di kelas untuk tugas ini.');
@@ -76,7 +76,7 @@ class DeklarasiController extends Controller
             $path = $request->file('bukti_file')->store('bukti_deklarasi', 'public');
         }
 
-        // TODO: Execute Forward Chaining logic here to determine AIAS Level
+        // TODO: Eksekusi logika Forward Chaining di sini untuk menentukan Level AIAS
         $detectedLevelId = $tugas->tingkat_aias_akhir_id; 
 
         $deklarasi = Deklarasi::create([
@@ -99,7 +99,7 @@ class DeklarasiController extends Controller
     }
 
     /**
-     * Display the specified declaration.
+     * Menampilkan deklarasi yang spesifik.
      */
     public function show($id)
     {
