@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dosen;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tugas;
 use App\Models\KelasKuliah;
 use App\Models\Deklarasi;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-class TaskController extends Controller
+class TugasController extends Controller
 {
     public function dashboard()
     {

@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DeclarationController;
-use App\Http\Controllers\RuleController;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\UserController as AdminUser;
+use App\Http\Controllers\Admin\AturanController as AdminAturan;
+use App\Http\Controllers\Dosen\TugasController as DosenTugas;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Admin\ProgramStudiController;
 use App\Http\Controllers\Admin\PeriodeAkademikController;
@@ -69,10 +70,10 @@ Route::middleware('auth')->group(function () {
         Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 
         Route::prefix('admin')->name('admin.')->group(function () {
-            Route::get('/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])->name('dashboard');
-            Route::get('/users', [App\Http\Controllers\AdminController::class, 'users'])->name('users.index');
-            Route::get('/rules', [App\Http\Controllers\AdminController::class, 'rules'])->name('rules.index');
-            Route::resource('aturan', RuleController::class)->except(['create', 'show', 'edit', 'update']);
+            Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+            Route::get('/users', [AdminUser::class, 'index'])->name('users.index');
+            Route::get('/rules', [AdminAturan::class, 'index'])->name('rules.index');
+            Route::resource('aturan', AdminAturan::class)->except(['create', 'show', 'edit', 'update']);
             
             // Master Data Routes
             Route::resource('program-studi', ProgramStudiController::class)->except(['show']);
@@ -93,13 +94,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/kelas/{kelas}', [DosenKelas::class, 'show'])->name('kelas.show');
             
             // Riwayat Tugas
-            Route::get('/riwayat', [TaskController::class, 'index'])->name('riwayat');
-            Route::get('/deklarasi/{id}/pdf', [TaskController::class, 'downloadPdf'])->name('deklarasi.pdf');
+            Route::get('/riwayat', [DosenTugas::class, 'index'])->name('riwayat');
+            Route::get('/deklarasi/{id}/pdf', [DosenTugas::class, 'downloadPdf'])->name('deklarasi.pdf');
 
             // Old Task Routes (kept for compatibility)
-            Route::get('/tugas/create', [TaskController::class, 'create'])->name('tugas.create');
-            Route::post('/tugas', [TaskController::class, 'store'])->name('tugas.store');
-            Route::get('/tugas/{task}/declarations', [TaskController::class, 'showDeclarations'])->name('tugas.declarations');
+            Route::get('/tugas/create', [DosenTugas::class, 'create'])->name('tugas.create');
+            Route::post('/tugas', [DosenTugas::class, 'store'])->name('tugas.store');
+            Route::get('/tugas/{task}/declarations', [DosenTugas::class, 'showDeclarations'])->name('tugas.declarations');
         });
 
         // Mahasiswa Portal Routes
