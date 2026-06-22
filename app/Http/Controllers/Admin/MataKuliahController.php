@@ -17,8 +17,8 @@ class MataKuliahController extends Controller
         $mataKuliah = MataKuliah::with('programStudi')
             ->when($search, function ($query, $search) {
                 return $query->where(function($q) use ($search) {
-                    $q->where('kode_mk', 'ilike', '%' . $search . '%')
-                      ->orWhere('nama_mk', 'ilike', '%' . $search . '%');
+                    $q->where('kode_mk', 'like', '%' . $search . '%')
+                      ->orWhere('nama_mk', 'like', '%' . $search . '%');
                 });
             })
             ->when($programStudiId, function ($query, $programStudiId) {

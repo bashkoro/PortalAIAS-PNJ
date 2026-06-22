@@ -19,7 +19,7 @@ class KelasKuliahController extends Controller
 
         $kelasKuliah = KelasKuliah::with(['mataKuliah', 'dosen', 'periodeAkademik'])
             ->when($search, function ($query, $search) {
-                return $query->where('nama_kelas', 'ilike', '%' . $search . '%');
+                return $query->where('nama_kelas', 'like', '%' . $search . '%');
             })
             ->when($periodeId, function ($query, $periodeId) {
                 return $query->where('periode_akademik_id', $periodeId);

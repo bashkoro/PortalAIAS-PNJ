@@ -17,8 +17,8 @@ class ProgramStudiController extends Controller
 
         $programStudi = ProgramStudi::when($search, function ($query, $search) {
                 return $query->where(function($q) use ($search) {
-                    $q->where('kode_prodi', 'ilike', '%' . $search . '%')
-                      ->orWhere('nama_prodi', 'ilike', '%' . $search . '%');
+                    $q->where('kode_prodi', 'like', '%' . $search . '%')
+                      ->orWhere('nama_prodi', 'like', '%' . $search . '%');
                 });
             })
             ->orderBy('nama_prodi')

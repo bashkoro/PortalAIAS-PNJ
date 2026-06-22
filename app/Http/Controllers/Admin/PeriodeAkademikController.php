@@ -18,7 +18,7 @@ class PeriodeAkademikController extends Controller
         $isActive = $request->query('is_active');
 
         $periodeAkademik = PeriodeAkademik::when($search, function ($query, $search) {
-                return $query->where('nama_periode', 'ilike', '%' . $search . '%');
+                return $query->where('nama_periode', 'like', '%' . $search . '%');
             })
             ->when($isActive !== null, function ($query) use ($isActive) {
                 return $query->where('is_active', $isActive);

@@ -20,8 +20,8 @@ class UserController extends Controller
         $users = Pengguna::with('hakAkses', 'programStudi')
             ->when($search, function ($query, $search) {
                 return $query->where(function($q) use ($search) {
-                    $q->where('nama', 'ilike', '%' . $search . '%')
-                      ->orWhere('email', 'ilike', '%' . $search . '%');
+                    $q->where('nama', 'like', '%' . $search . '%')
+                      ->orWhere('email', 'like', '%' . $search . '%');
                 });
             })
             ->when($hakAksesId, function ($query, $hakAksesId) {
