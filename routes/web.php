@@ -71,9 +71,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
-            Route::get('/users', [AdminUser::class, 'index'])->name('users.index');
-            Route::get('/rules', [AdminAturan::class, 'index'])->name('rules.index');
-            Route::resource('aturan', AdminAturan::class)->except(['create', 'show', 'edit', 'update']);
+            Route::resource('users', AdminUser::class)->except(['show']);
+            Route::resource('rules', AdminAturan::class)->except(['show']);
             
             // Master Data Routes
             Route::resource('program-studi', ProgramStudiController::class)->except(['show']);
